@@ -21,7 +21,7 @@ export default function AdminLayout() {
     { name: "Document Management", path: "/admin/document-management", icon: FolderGit },
     { name: "Lead Distribution", path: "/admin/lead-distribution", icon: Network },
     { name: "Notifications", path: "/admin/notifications", icon: Bell },
-    { name: "Referral & Affiliates", path: "/admin/referrals", icon: Link2 },
+    { name: "Referrals & Affiliates", path: "/admin/referrals", icon: Link2 },
     { name: "Advertisements", path: "/admin/advertisements", icon: Megaphone },
     { name: "Payments", path: "/admin/payments", icon: DollarSign },
     { name: "Subscription Plans", path: "/admin/subscriptions", icon: CreditCard },
