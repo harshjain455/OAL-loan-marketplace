@@ -1,0 +1,5 @@
+[33m9ae8502[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Fix: subscription route now loads LenderSubscription page instead of redirecting to billing
+[33m4520224[m Fix Submit Offer modal: fresh form on each open, success state after submit
+[33md0297e9[m Borrower portal improvements: fix typo, add notification bell, settings link, flow tracker, expand shortcuts, add post-acceptance pipeline
+[33m1d93895[m harsh pull
+[33m5c57d79[m pull a
