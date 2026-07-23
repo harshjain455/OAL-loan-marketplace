@@ -52,16 +52,29 @@ export default function Login() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Select Role</label>
-            <select
-              {...register("role")}
-              className="w-full bg-slate-950 border border-slate-850 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-blue-500"
-            >
-              <option value="borrower">Borrower / Applicant</option>
-              <option value="lender">Lender / Investor</option>
-              <option value="rep">OAL Representative</option>
-              <option value="admin">System Admin</option>
-            </select>
+            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Select Role</label>
+            <input type="hidden" {...register("role")} />
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { id: "borrower", label: "Borrower / Applicant" },
+                { id: "lender", label: "Lender / Investor" },
+                { id: "rep", label: "OAL Representative" },
+                { id: "admin", label: "System Admin" }
+              ].map((roleOption) => (
+                <button
+                  key={roleOption.id}
+                  type="button"
+                  onClick={() => setValue("role", roleOption.id)}
+                  className={`px-3 py-2.5 rounded-lg border text-xs font-medium transition-all text-center ${
+                    selectedRole === roleOption.id
+                      ? "bg-blue-600 border-blue-500 text-slate-100 shadow-lg shadow-blue-500/20"
+                      : "bg-slate-950 border-slate-850 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                  }`}
+                >
+                  {roleOption.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div>

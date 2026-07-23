@@ -45,6 +45,7 @@ import LenderProfile from "./pages/Lender/LenderProfile";
 
 // Rep Pages
 
+import RepDashboard from "./pages/Rep/RepDashboard";
 import RepQualifiedLeads from "./pages/Rep/RepQualifiedLeads";
 import RepAILeadAlerts from "./pages/Rep/RepAILeadAlerts";
 import RepLeadDetails from "./pages/Rep/RepLeadDetails";
@@ -145,7 +146,8 @@ export default function App() {
 
         {/* Rep Portal */}
         <Route path="/rep" element={<RepLayout />}>
-          <Route index element={<Navigate to="/rep/communication" replace />} />
+          <Route index element={<Navigate to="/rep/dashboard" replace />} />
+          <Route path="dashboard" element={<RepDashboard />} />
           <Route path="communication" element={<RepLetsWorkChat />} />
           <Route path="qualified-leads" element={<RepQualifiedLeads />} />
           <Route path="lead-alerts" element={<RepAILeadAlerts />} />
