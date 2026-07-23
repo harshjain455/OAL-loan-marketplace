@@ -15,6 +15,9 @@ import Register from "./pages/Auth/Register";
 import MFAVerification from "./pages/Auth/MFAVerification";
 
 // Borrower Pages
+import BorrowerDashboard from "./pages/Borrower/BorrowerDashboard";
+import BorrowerLoanApplication from "./pages/Borrower/BorrowerLoanApplication";
+import BorrowerDocuments from "./pages/Borrower/BorrowerDocuments";
 import BorrowerAIScore from "./pages/Borrower/BorrowerAIScore";
 import BorrowerOffers from "./pages/Borrower/BorrowerOffers";
 import BorrowerNotifications from "./pages/Borrower/BorrowerNotifications";
@@ -42,6 +45,7 @@ import LenderProfile from "./pages/Lender/LenderProfile";
 
 // Rep Pages
 
+import RepDashboard from "./pages/Rep/RepDashboard";
 import RepQualifiedLeads from "./pages/Rep/RepQualifiedLeads";
 import RepAILeadAlerts from "./pages/Rep/RepAILeadAlerts";
 import RepLeadDetails from "./pages/Rep/RepLeadDetails";
@@ -108,7 +112,10 @@ export default function App() {
 
         {/* Borrower Portal */}
         <Route path="/borrower" element={<BorrowerLayout />}>
-          <Route index element={<Navigate to="/borrower/ai-score" replace />} />
+          <Route index element={<Navigate to="/borrower/dashboard" replace />} />
+          <Route path="dashboard" element={<BorrowerDashboard />} />
+          <Route path="loan-application" element={<BorrowerLoanApplication />} />
+          <Route path="documents" element={<BorrowerDocuments />} />
           <Route path="ai-score" element={<BorrowerAIScore />} />
           <Route path="offers" element={<BorrowerOffers />} />
           <Route path="notifications" element={<BorrowerNotifications />} />
@@ -139,7 +146,8 @@ export default function App() {
 
         {/* Rep Portal */}
         <Route path="/rep" element={<RepLayout />}>
-          <Route index element={<Navigate to="/rep/communication" replace />} />
+          <Route index element={<Navigate to="/rep/dashboard" replace />} />
+          <Route path="dashboard" element={<RepDashboard />} />
           <Route path="communication" element={<RepLetsWorkChat />} />
           <Route path="qualified-leads" element={<RepQualifiedLeads />} />
           <Route path="lead-alerts" element={<RepAILeadAlerts />} />
