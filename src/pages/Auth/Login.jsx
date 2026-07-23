@@ -33,6 +33,16 @@ export default function Login() {
   }, [selectedRole, setValue]);
 
   const onSubmit = (data) => {
+    localStorage.setItem("oal_user_role", data.role);
+    localStorage.setItem("oal_user_email", data.email);
+    const roleNameMap = {
+      borrower: "Rahul Sharma",
+      lender: "Apex Capital Lending",
+      rep: "Amit Verma",
+      admin: "Vikramaditya Roy",
+      network: "Network Stream Viewer"
+    };
+    localStorage.setItem("oal_user_name", roleNameMap[data.role] || "System Admin");
     // Redirect to MFA before landing on dashboard
     navigate(`/auth/mfa?role=${data.role}`);
   };
