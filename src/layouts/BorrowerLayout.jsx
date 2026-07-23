@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Menu, X, Home, FileText, UploadCloud, Cpu, Award, Bell, MessageSquare, Share2, Settings, User } from "lucide-react";
+import { Menu, X, Home, FileText, UploadCloud, Cpu, Award, Bell, MessageSquare, Share2, Settings, User, LogOut } from "lucide-react";
 
 export default function BorrowerLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
   const menuItems = [
-    { name: "Dashboard", path: "/borrower/dashboard", icon: Home },
-    { name: "Loan Application", path: "/borrower/loan-application", icon: FileText },
-    { name: "Documents", path: "/borrower/documents", icon: UploadCloud },
+
     { name: "AI Borrower Score", path: "/borrower/ai-score", icon: Cpu },
     { name: "Waiting Room / Offers", path: "/borrower/offers", icon: Award },
     { name: "Notifications", path: "/borrower/notifications", icon: Bell },
@@ -35,7 +33,7 @@ export default function BorrowerLayout() {
         }`}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800 bg-slate-900">
-          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">OAL Borrower</span>
+          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">Borrow Portal Dashbord</span>
           <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(false)}>
             <X size={20} />
           </button>
@@ -62,6 +60,16 @@ export default function BorrowerLayout() {
             );
           })}
         </nav>
+
+        <div className="p-4 border-t border-slate-800 mt-auto">
+          <Link
+            to="/auth/login"
+            className="flex items-center px-4 py-3 text-sm font-medium text-red-400 rounded-lg hover:bg-red-500/10 hover:text-red-300 transition-colors group"
+          >
+            <LogOut size={18} className="mr-3 text-red-400 group-hover:text-red-300" />
+            Logout
+          </Link>
+        </div>
       </aside>
 
       {/* Main Content Area */}
@@ -73,7 +81,7 @@ export default function BorrowerLayout() {
           </button>
 
           <div className="flex items-center ml-auto space-x-4">
-            <span className="text-sm text-slate-300">Borrower Account</span>
+            <span className="text-sm text-slate-300">Borrower</span>
             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-200">
               <User size={16} />
             </div>

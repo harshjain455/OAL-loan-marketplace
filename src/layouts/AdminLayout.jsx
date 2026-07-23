@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Menu, X, Home, Users, UserCheck, FileText, Cpu, ShieldAlert, FolderGit, Network, Bell, Link2, Megaphone, DollarSign, Edit, BarChart, LifeBuoy, FileCode, Settings, Shield, User } from "lucide-react";
+import { Menu, X, Home, Users, UserCheck, FileText, Cpu, ShieldAlert, FolderGit, Network, Bell, Link2, Megaphone, DollarSign, Edit, BarChart, LifeBuoy, FileCode, Settings, Shield, User, LogOut } from "lucide-react";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
   const menuItems = [
-    { name: "Dashboard", path: "/admin/dashboard", icon: Home },
+
     { name: "Borrowers", path: "/admin/borrowers", icon: Users },
     { name: "Lenders", path: "/admin/lenders", icon: UserCheck },
     { name: "Loan Applications", path: "/admin/loan-applications", icon: FileText },
@@ -16,9 +16,10 @@ export default function AdminLayout() {
     { name: "Document Management", path: "/admin/document-management", icon: FolderGit },
     { name: "Lead Distribution", path: "/admin/lead-distribution", icon: Network },
     { name: "Notifications", path: "/admin/notifications", icon: Bell },
-    { name: "Referrals & Affiliates", path: "/admin/referrals", icon: Link2 },
+    { name: "Referral & Affiliates", path: "/admin/referrals", icon: Link2 },
     { name: "Advertisements", path: "/admin/advertisements", icon: Megaphone },
-    { name: "Payments & Subscriptions", path: "/admin/payments", icon: DollarSign },
+    { name: "Payments", path: "/admin/payments", icon: DollarSign },
+    { name: "Subscription Plans", path: "/admin/subscriptions", icon: CreditCard },
     { name: "CMS", path: "/admin/cms", icon: Edit },
     { name: "Reports & Analytics", path: "/admin/reports", icon: BarChart },
     { name: "Support Tickets", path: "/admin/help-desk", icon: LifeBuoy },
@@ -44,7 +45,7 @@ export default function AdminLayout() {
         }`}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800 bg-slate-900">
-          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">OAL Admin</span>
+          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">Admin Panel Dashboard</span>
           <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(false)}>
             <X size={20} />
           </button>
@@ -71,6 +72,16 @@ export default function AdminLayout() {
             );
           })}
         </nav>
+
+        <div className="p-4 border-t border-slate-800 mt-auto">
+          <Link
+            to="/auth/login"
+            className="flex items-center px-4 py-3 text-sm font-medium text-red-400 rounded-lg hover:bg-red-500/10 hover:text-red-300 transition-colors group"
+          >
+            <LogOut size={18} className="mr-3 text-red-400 group-hover:text-red-300" />
+            Logout
+          </Link>
+        </div>
       </aside>
 
       {/* Main Content Area */}
@@ -82,7 +93,7 @@ export default function AdminLayout() {
           </button>
 
           <div className="flex items-center ml-auto space-x-4">
-            <span className="text-sm text-slate-300">Admin Control</span>
+            <span className="text-sm text-slate-300">Admin</span>
             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-200">
               <User size={16} />
             </div>

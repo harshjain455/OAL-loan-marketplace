@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Menu, X, Home, Compass, AlertCircle, Eye, Heart, Briefcase, MessageSquare, Clock, User } from "lucide-react";
+import { Menu, X, Home, Compass, AlertCircle, Eye, Heart, Briefcase, MessageSquare, Clock, User, LogOut, Bell, FileText, BarChart2, CreditCard, Settings } from "lucide-react";
 
 export default function NetworkLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -8,13 +8,19 @@ export default function NetworkLayout() {
 
   const menuItems = [
     { name: "Dashboard", path: "/network/dashboard", icon: Home },
-    { name: "Live Marketplace View", path: "/network/live-stream", icon: Compass },
-    { name: "Qualified Leads & Alerts", path: "/network/leads", icon: AlertCircle },
-    { name: "Lead Details & Requests", path: "/network/details", icon: Eye },
+    { name: "Communication", path: "/network/communication", icon: MessageSquare },
+    { name: "Qualified Leads", path: "/network/leads", icon: AlertCircle },
+    { name: "AI Lead Alerts", path: "/network/alerts", icon: Bell },
+    { name: "Lead Details", path: "/network/details", icon: Eye },
+    { name: "Loan Requests", path: "/network/requests", icon: FileText },
     { name: "Saved Leads", path: "/network/saved", icon: Heart },
     { name: "Offer Management", path: "/network/offers", icon: Briefcase },
-    { name: "Communication", path: "/network/communication", icon: MessageSquare },
-    { name: "Timeline Tracking", path: "/network/timeline", icon: Clock },
+    { name: "Analytics", path: "/network/analytics", icon: BarChart2 },
+    { name: "Reports", path: "/network/reports", icon: FileText },
+    { name: "Billing", path: "/network/billing", icon: CreditCard },
+    { name: "Subscription", path: "/network/subscription", icon: FileText },
+    { name: "Profile", path: "/network/profile", icon: User },
+    { name: "Settings", path: "/network/settings", icon: Settings },
   ];
 
   return (
@@ -34,7 +40,7 @@ export default function NetworkLayout() {
         }`}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800 bg-slate-900">
-          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">OAL Network Panel</span>
+          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">OAL Network Panel Dashboard</span>
           <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(false)}>
             <X size={20} />
           </button>
@@ -61,6 +67,16 @@ export default function NetworkLayout() {
             );
           })}
         </nav>
+
+        <div className="p-4 border-t border-slate-800 mt-auto">
+          <Link
+            to="/auth/login"
+            className="flex items-center px-4 py-3 text-sm font-medium text-red-400 rounded-lg hover:bg-red-500/10 hover:text-red-300 transition-colors group"
+          >
+            <LogOut size={18} className="mr-3 text-red-400 group-hover:text-red-300" />
+            Logout
+          </Link>
+        </div>
       </aside>
 
       {/* Main Content Area */}
@@ -72,7 +88,7 @@ export default function NetworkLayout() {
           </button>
 
           <div className="flex items-center ml-auto space-x-4">
-            <span className="text-sm text-slate-300">Network Viewer</span>
+            <span className="text-sm text-slate-300">OAL Network Panel</span>
             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-200">
               <User size={16} />
             </div>

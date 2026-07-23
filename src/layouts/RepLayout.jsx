@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Menu, X, Home, Users, Bell, Eye, FileText, Heart, MessageSquare, Briefcase, BarChart2, CreditCard, Settings, User } from "lucide-react";
+import { Menu, X, Home, Users, Bell, Eye, FileText, Heart, MessageSquare, Briefcase, BarChart2, CreditCard, Settings, User, LogOut } from "lucide-react";
 
 export default function RepLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -8,17 +8,19 @@ export default function RepLayout() {
 
   const menuItems = [
     { name: "Dashboard", path: "/rep/dashboard", icon: Home },
+    { name: "Communication", path: "/rep/communication", icon: MessageSquare },
     { name: "Qualified Leads", path: "/rep/qualified-leads", icon: Users },
     { name: "AI Lead Alerts", path: "/rep/lead-alerts", icon: Bell },
     { name: "Lead Details", path: "/rep/lead-details", icon: Eye },
     { name: "Loan Requests", path: "/rep/loan-requests", icon: FileText },
     { name: "Saved Leads", path: "/rep/saved-leads", icon: Heart },
-    { name: "Communication (LetsWork)", path: "/rep/communication", icon: MessageSquare },
     { name: "Offer Management", path: "/rep/offers", icon: Briefcase },
-    { name: "OAL Network Panel", path: "/rep/network-panel", icon: Eye },
-    { name: "Analytics & Reports", path: "/rep/analytics", icon: BarChart2 },
-    { name: "Billing & Subscription", path: "/rep/billing", icon: CreditCard },
-    { name: "Profile & Settings", path: "/rep/settings", icon: Settings },
+    { name: "Analytics", path: "/rep/analytics", icon: BarChart2 },
+    { name: "Reports", path: "/rep/reports", icon: FileText },
+    { name: "Billing", path: "/rep/billing", icon: CreditCard },
+    { name: "Subscription", path: "/rep/subscription", icon: FileText },
+    { name: "Profile", path: "/rep/profile", icon: User },
+    { name: "Settings", path: "/rep/settings", icon: Settings },
   ];
 
   return (
@@ -38,7 +40,7 @@ export default function RepLayout() {
         }`}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800 bg-slate-900">
-          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">OAL Rep Portal</span>
+          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">OAL REPS / AGENT Portal Dashboard</span>
           <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(false)}>
             <X size={20} />
           </button>
@@ -65,6 +67,16 @@ export default function RepLayout() {
             );
           })}
         </nav>
+
+        <div className="p-4 border-t border-slate-800 mt-auto">
+          <Link
+            to="/auth/login"
+            className="flex items-center px-4 py-3 text-sm font-medium text-red-400 rounded-lg hover:bg-red-500/10 hover:text-red-300 transition-colors group"
+          >
+            <LogOut size={18} className="mr-3 text-red-400 group-hover:text-red-300" />
+            Logout
+          </Link>
+        </div>
       </aside>
 
       {/* Main Content Area */}
@@ -76,7 +88,7 @@ export default function RepLayout() {
           </button>
 
           <div className="flex items-center ml-auto space-x-4">
-            <span className="text-sm text-slate-300">Agent Account</span>
+            <span className="text-sm text-slate-300">OAL Rep / Agent</span>
             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-200">
               <User size={16} />
             </div>

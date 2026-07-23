@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Menu, X, Home, Users, Bell, Award, Eye, FileText, Heart, MessageSquare, Briefcase, BarChart2, CreditCard, Settings, User } from "lucide-react";
+import { Menu, X, Home, Users, Bell, Award, Eye, FileText, Heart, MessageSquare, Briefcase, BarChart2, CreditCard, Settings, User, LogOut } from "lucide-react";
 
 export default function LenderLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -10,16 +10,18 @@ export default function LenderLayout() {
     { name: "Dashboard", path: "/lender/dashboard", icon: Home },
     { name: "Qualified Leads", path: "/lender/qualified-leads", icon: Users },
     { name: "AI Lead Alerts", path: "/lender/lead-alerts", icon: Bell },
-    { name: "Borrower Rankings", path: "/lender/rankings", icon: Award },
+    { name: "Borrower Rankings – [ iNV IQ ]", path: "/lender/rankings", icon: Award },
     { name: "Lead Details", path: "/lender/lead-details", icon: Eye },
     { name: "Loan Requests", path: "/lender/loan-requests", icon: FileText },
     { name: "Saved Leads", path: "/lender/saved-leads", icon: Heart },
     { name: "Communication", path: "/lender/communication", icon: MessageSquare },
     { name: "Offer Management", path: "/lender/offers", icon: Briefcase },
-    { name: "OAL Network Panel", path: "/lender/network-panel", icon: Eye },
-    { name: "Analytics & Reports", path: "/lender/analytics", icon: BarChart2 },
-    { name: "Billing & Subscription", path: "/lender/billing", icon: CreditCard },
-    { name: "Profile & Settings", path: "/lender/settings", icon: Settings },
+    { name: "Analytics", path: "/lender/analytics", icon: BarChart2 },
+    { name: "Reports", path: "/lender/reports", icon: FileText },
+    { name: "Billing", path: "/lender/billing", icon: CreditCard },
+    { name: "Subscription", path: "/lender/subscription", icon: FileText },
+    { name: "Profile", path: "/lender/profile", icon: User },
+    { name: "Settings", path: "/lender/settings", icon: Settings },
   ];
 
   return (
@@ -39,7 +41,7 @@ export default function LenderLayout() {
         }`}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800 bg-slate-900">
-          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">OAL Lender</span>
+          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">Lender Portal Dashboard</span>
           <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(false)}>
             <X size={20} />
           </button>
@@ -66,6 +68,16 @@ export default function LenderLayout() {
             );
           })}
         </nav>
+
+        <div className="p-4 border-t border-slate-800 mt-auto">
+          <Link
+            to="/auth/login"
+            className="flex items-center px-4 py-3 text-sm font-medium text-red-400 rounded-lg hover:bg-red-500/10 hover:text-red-300 transition-colors group"
+          >
+            <LogOut size={18} className="mr-3 text-red-400 group-hover:text-red-300" />
+            Logout
+          </Link>
+        </div>
       </aside>
 
       {/* Main Content Area */}
@@ -77,7 +89,7 @@ export default function LenderLayout() {
           </button>
 
           <div className="flex items-center ml-auto space-x-4">
-            <span className="text-sm text-slate-300">Lender Account</span>
+            <span className="text-sm text-slate-300">Lender</span>
             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-200">
               <User size={16} />
             </div>

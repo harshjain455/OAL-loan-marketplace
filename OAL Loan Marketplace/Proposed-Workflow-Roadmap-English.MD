@@ -30,6 +30,8 @@ The platform will have 4 main roles:
 3. OAL Rep / Agent
 4. Admin / Super Admin
 
+*Note: While there are only 4 distinct user roles, the system includes a 5th major operational dashboard called the **OAL Network Panel**. This is a shared Live Marketplace interface accessed by both Lenders and OAL Reps.*
+
 ---
 
 ## 1. Website Flow
@@ -274,15 +276,20 @@ Post Funding Dashboard
 
 ---
 
-## Role Connection
+## Role Connection & Network Panel
 
-```
+```text
                  ADMIN
                    |
       ----------------------------
       |             |            |
  Borrower       OAL Rep      Lender
+                    |            |
+                    --------------
+                          |
+                  OAL Network Panel
+                (Shared Marketplace)
 
 
-Borrower → OAL Rep → Lender
+Borrower → OAL Rep → (OAL Network Panel) ← Lender
 ```

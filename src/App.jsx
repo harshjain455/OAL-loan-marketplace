@@ -15,9 +15,6 @@ import Register from "./pages/Auth/Register";
 import MFAVerification from "./pages/Auth/MFAVerification";
 
 // Borrower Pages
-import BorrowerDashboard from "./pages/Borrower/BorrowerDashboard";
-import BorrowerLoanApplication from "./pages/Borrower/BorrowerLoanApplication";
-import BorrowerDocuments from "./pages/Borrower/BorrowerDocuments";
 import BorrowerAIScore from "./pages/Borrower/BorrowerAIScore";
 import BorrowerOffers from "./pages/Borrower/BorrowerOffers";
 import BorrowerNotifications from "./pages/Borrower/BorrowerNotifications";
@@ -26,7 +23,7 @@ import BorrowerReferral from "./pages/Borrower/BorrowerReferral";
 import BorrowerSettings from "./pages/Borrower/BorrowerSettings";
 
 // Lender Pages
-import LenderDashboard from "./pages/Lender/LenderDashboard";
+
 import LenderQualifiedLeads from "./pages/Lender/LenderQualifiedLeads";
 import LenderAILeadAlerts from "./pages/Lender/LenderAILeadAlerts";
 import LenderBorrowerRankings from "./pages/Lender/LenderBorrowerRankings";
@@ -39,9 +36,12 @@ import LenderNetworkPanel from "./pages/Lender/LenderNetworkPanel";
 import LenderAnalytics from "./pages/Lender/LenderAnalytics";
 import LenderBilling from "./pages/Lender/LenderBilling";
 import LenderSettings from "./pages/Lender/LenderSettings";
+import LenderReports from "./pages/Lender/LenderReports";
+import LenderSubscription from "./pages/Lender/LenderSubscription";
+import LenderProfile from "./pages/Lender/LenderProfile";
 
 // Rep Pages
-import RepDashboard from "./pages/Rep/RepDashboard";
+
 import RepQualifiedLeads from "./pages/Rep/RepQualifiedLeads";
 import RepAILeadAlerts from "./pages/Rep/RepAILeadAlerts";
 import RepLeadDetails from "./pages/Rep/RepLeadDetails";
@@ -53,9 +53,12 @@ import RepNetworkPanel from "./pages/Rep/RepNetworkPanel";
 import RepAnalytics from "./pages/Rep/RepAnalytics";
 import RepBilling from "./pages/Rep/RepBilling";
 import RepSettings from "./pages/Rep/RepSettings";
+import RepReports from "./pages/Rep/RepReports";
+import RepSubscription from "./pages/Rep/RepSubscription";
+import RepProfile from "./pages/Rep/RepProfile";
 
 // Network Panel Pages
-import NetworkDashboard from "./pages/Network/NetworkDashboard";
+
 import NetworkLiveMarketplace from "./pages/Network/NetworkLiveMarketplace";
 import NetworkLeads from "./pages/Network/NetworkLeads";
 import NetworkDetails from "./pages/Network/NetworkDetails";
@@ -63,9 +66,13 @@ import NetworkSavedLeads from "./pages/Network/NetworkSavedLeads";
 import NetworkOfferManagement from "./pages/Network/NetworkOfferManagement";
 import NetworkCommunication from "./pages/Network/NetworkCommunication";
 import NetworkTimeline from "./pages/Network/NetworkTimeline";
+import NetworkReports from "./pages/Network/NetworkReports";
+import NetworkSubscription from "./pages/Network/NetworkSubscription";
+import NetworkProfile from "./pages/Network/NetworkProfile";
+import NetworkSettings from "./pages/Network/NetworkSettings";
 
 // Admin Pages
-import AdminDashboard from "./pages/Admin/AdminDashboard";
+
 import AdminBorrowers from "./pages/Admin/AdminBorrowers";
 import AdminLenders from "./pages/Admin/AdminLenders";
 import AdminLoanApplications from "./pages/Admin/AdminLoanApplications";
@@ -77,6 +84,7 @@ import AdminNotifications from "./pages/Admin/AdminNotifications";
 import AdminReferrals from "./pages/Admin/AdminReferrals";
 import AdminAdvertisements from "./pages/Admin/AdminAdvertisements";
 import AdminPayments from "./pages/Admin/AdminPayments";
+import AdminSubscriptions from "./pages/Admin/AdminSubscriptions";
 import AdminCMS from "./pages/Admin/AdminCMS";
 import AdminReports from "./pages/Admin/AdminReports";
 import AdminHelpDesk from "./pages/Admin/AdminHelpDesk";
@@ -99,10 +107,7 @@ export default function App() {
 
         {/* Borrower Portal */}
         <Route path="/borrower" element={<BorrowerLayout />}>
-          <Route index element={<Navigate to="/borrower/dashboard" replace />} />
-          <Route path="dashboard" element={<BorrowerDashboard />} />
-          <Route path="loan-application" element={<BorrowerLoanApplication />} />
-          <Route path="documents" element={<BorrowerDocuments />} />
+          <Route index element={<Navigate to="/borrower/ai-score" replace />} />
           <Route path="ai-score" element={<BorrowerAIScore />} />
           <Route path="offers" element={<BorrowerOffers />} />
           <Route path="notifications" element={<BorrowerNotifications />} />
@@ -113,8 +118,7 @@ export default function App() {
 
         {/* Lender Portal */}
         <Route path="/lender" element={<LenderLayout />}>
-          <Route index element={<Navigate to="/lender/dashboard" replace />} />
-          <Route path="dashboard" element={<LenderDashboard />} />
+          <Route index element={<Navigate to="/lender/qualified-leads" replace />} />
           <Route path="qualified-leads" element={<LenderQualifiedLeads />} />
           <Route path="lead-alerts" element={<LenderAILeadAlerts />} />
           <Route path="rankings" element={<LenderBorrowerRankings />} />
@@ -125,31 +129,36 @@ export default function App() {
           <Route path="offers" element={<LenderOfferManagement />} />
           <Route path="network-panel" element={<LenderNetworkPanel />} />
           <Route path="analytics" element={<LenderAnalytics />} />
+          <Route path="reports" element={<LenderReports />} />
           <Route path="billing" element={<LenderBilling />} />
+          <Route path="subscription" element={<LenderSubscription />} />
+          <Route path="profile" element={<LenderProfile />} />
           <Route path="settings" element={<LenderSettings />} />
         </Route>
 
         {/* Rep Portal */}
         <Route path="/rep" element={<RepLayout />}>
-          <Route index element={<Navigate to="/rep/dashboard" replace />} />
-          <Route path="dashboard" element={<RepDashboard />} />
+          <Route index element={<Navigate to="/rep/communication" replace />} />
+          <Route path="communication" element={<RepLetsWorkChat />} />
           <Route path="qualified-leads" element={<RepQualifiedLeads />} />
           <Route path="lead-alerts" element={<RepAILeadAlerts />} />
           <Route path="lead-details" element={<RepLeadDetails />} />
           <Route path="loan-requests" element={<RepLoanRequests />} />
           <Route path="saved-leads" element={<RepSavedLeads />} />
-          <Route path="communication" element={<RepLetsWorkChat />} />
+
           <Route path="offers" element={<RepOfferManagement />} />
           <Route path="network-panel" element={<RepNetworkPanel />} />
           <Route path="analytics" element={<RepAnalytics />} />
+          <Route path="reports" element={<RepReports />} />
           <Route path="billing" element={<RepBilling />} />
+          <Route path="subscription" element={<RepSubscription />} />
+          <Route path="profile" element={<RepProfile />} />
           <Route path="settings" element={<RepSettings />} />
         </Route>
 
         {/* Network Panel (Shared View/Stream Portal) */}
         <Route path="/network" element={<NetworkLayout />}>
-          <Route index element={<Navigate to="/network/dashboard" replace />} />
-          <Route path="dashboard" element={<NetworkDashboard />} />
+          <Route index element={<Navigate to="/network/communication" replace />} />
           <Route path="live-stream" element={<NetworkLiveMarketplace />} />
           <Route path="leads" element={<NetworkLeads />} />
           <Route path="details" element={<NetworkDetails />} />
@@ -157,12 +166,15 @@ export default function App() {
           <Route path="offers" element={<NetworkOfferManagement />} />
           <Route path="communication" element={<NetworkCommunication />} />
           <Route path="timeline" element={<NetworkTimeline />} />
+          <Route path="reports" element={<NetworkReports />} />
+          <Route path="subscription" element={<NetworkSubscription />} />
+          <Route path="profile" element={<NetworkProfile />} />
+          <Route path="settings" element={<NetworkSettings />} />
         </Route>
 
         {/* Admin Portal */}
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="/admin/dashboard" replace />} />
-          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route index element={<Navigate to="/admin/borrowers" replace />} />
           <Route path="borrowers" element={<AdminBorrowers />} />
           <Route path="lenders" element={<AdminLenders />} />
           <Route path="loan-applications" element={<AdminLoanApplications />} />
@@ -174,6 +186,7 @@ export default function App() {
           <Route path="referrals" element={<AdminReferrals />} />
           <Route path="advertisements" element={<AdminAdvertisements />} />
           <Route path="payments" element={<AdminPayments />} />
+          <Route path="subscriptions" element={<AdminSubscriptions />} />
           <Route path="cms" element={<AdminCMS />} />
           <Route path="reports" element={<AdminReports />} />
           <Route path="help-desk" element={<AdminHelpDesk />} />

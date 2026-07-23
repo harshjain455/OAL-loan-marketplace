@@ -182,7 +182,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between overflow-x-hidden font-sans relative">
+    <div className="h-screen bg-slate-950 text-slate-100 flex flex-col overflow-y-auto overflow-x-hidden font-sans relative">
       {/* 1. Moving Technical Tech Grid Background */}
       <div className="absolute inset-0 animate-grid opacity-[0.8] pointer-events-none z-0" />
 

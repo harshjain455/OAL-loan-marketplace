@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
-import { UserPlus } from "lucide-react";
+import { UserPlus, ArrowLeft } from "lucide-react";
 
 const schema = zod.object({
   name: zod.string().min(2, "Full legal name is required"),
@@ -26,7 +26,12 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 font-sans">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center py-16 px-4 font-sans relative">
+      <Link to="/" className="absolute top-6 left-6 md:top-8 md:left-8 flex items-center text-slate-400 hover:text-slate-100 transition-colors">
+        <ArrowLeft size={20} className="mr-2" />
+        <span className="text-sm font-medium">Back to Home</span>
+      </Link>
+
       <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 space-y-6">
         <div className="flex flex-col items-center text-center">
           <UserPlus size={40} className="text-indigo-400 mb-3" />
