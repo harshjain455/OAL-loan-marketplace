@@ -139,7 +139,7 @@ export default function App() {
           <Route path="analytics" element={<LenderAnalytics />} />
           <Route path="reports" element={<LenderReports />} />
           <Route path="billing" element={<LenderBilling />} />
-          <Route path="subscription" element={<LenderSubscription />} />
+          <Route path="subscription" element={<Navigate to="/lender/billing" replace />} />
           <Route path="profile" element={<LenderProfile />} />
           <Route path="settings" element={<LenderSettings />} />
         </Route>

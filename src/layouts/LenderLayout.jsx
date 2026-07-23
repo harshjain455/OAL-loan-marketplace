@@ -22,8 +22,7 @@ function LenderLayoutInner() {
     { name: "OAL Network Panel", path: "/lender/network-panel", icon: Compass },
     { name: "Analytics", path: "/lender/analytics", icon: BarChart2 },
     { name: "Reports", path: "/lender/reports", icon: FileText },
-    { name: "Billing", path: "/lender/billing", icon: CreditCard },
-    { name: "Subscription", path: "/lender/subscription", icon: FileText },
+    { name: "Billing & Subscription", path: "/lender/billing", icon: CreditCard },
     { name: "Profile", path: "/lender/profile", icon: User },
     { name: "Settings", path: "/lender/settings", icon: Settings },
   ];
@@ -50,7 +49,7 @@ function LenderLayoutInner() {
         }`}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800/50 bg-slate-900/50">
-          <span className="text-sm font-extrabold tracking-wider text-white uppercase bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+          <span className="text-sm font-extrabold tracking-wider text-white uppercase bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent truncate">
             Lender Portal Dashboard
           </span>
           <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(false)}>
@@ -85,7 +84,7 @@ function LenderLayoutInner() {
                     </span>
                   )}
                 </div>
-                {item.name}
+                <span className="truncate">{item.name}</span>
                 {isChat && unreadCount > 0 && (
                   <span className="ml-auto bg-rose-500/20 text-rose-400 border border-rose-500/30 text-[9px] font-extrabold px-1.5 py-0.5 rounded-full">
                     {unreadCount} New

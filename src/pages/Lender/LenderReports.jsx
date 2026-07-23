@@ -178,7 +178,7 @@ export default function LenderReports() {
           </div>
           <div>
             <div className="text-xs text-slate-400 font-semibold">Total Reports</div>
-            <div className="text-2xl font-black text-white">{REPORTS.length}</div>
+            <div className="text-2xl font-black text-white">{reports.length}</div>
           </div>
         </div>
         <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-4 flex items-center gap-3">
