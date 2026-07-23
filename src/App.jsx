@@ -63,6 +63,7 @@ import RepProfile from "./pages/Rep/RepProfile";
 
 // Network Panel Pages
 
+import NetworkDashboard from "./pages/Network/NetworkDashboard";
 import NetworkLiveMarketplace from "./pages/Network/NetworkLiveMarketplace";
 import NetworkLeads from "./pages/Network/NetworkLeads";
 import NetworkDetails from "./pages/Network/NetworkDetails";
@@ -167,7 +168,8 @@ export default function App() {
 
         {/* Network Panel (Shared View/Stream Portal) */}
         <Route path="/network" element={<NetworkLayout />}>
-          <Route index element={<Navigate to="/network/communication" replace />} />
+          <Route index element={<Navigate to="/network/dashboard" replace />} />
+          <Route path="dashboard" element={<NetworkDashboard />} />
           <Route path="live-stream" element={<NetworkLiveMarketplace />} />
           <Route path="leads" element={<NetworkLeads />} />
           <Route path="details" element={<NetworkDetails />} />
