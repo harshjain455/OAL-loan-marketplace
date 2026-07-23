@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Home, Users, Bell, Award, Eye, FileText, Heart, MessageSquare, Briefcase, BarChart2, CreditCard, Settings, User, LogOut, Compass, PanelLeft, PanelLeftClose, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { 
+  Menu, X, Home, Users, Bell, Award, Eye, FileText, Heart, MessageSquare, 
+  Briefcase, BarChart2, CreditCard, Settings, User, LogOut, ChevronLeft, ChevronRight, 
+  PanelLeft, PanelLeftClose, Compass, ChevronDown 
+} from "lucide-react";
 import { ChatNotificationProvider, useChatNotification } from "../context/ChatNotificationContext";
 
 function LenderLayoutInner() {
@@ -10,6 +14,11 @@ function LenderLayoutInner() {
   const location = useLocation();
   const navigate = useNavigate();
   const { unreadCount, setUnreadCount } = useChatNotification();
+
+  // Dynamic Logged In Lender Info
+  const userRole = localStorage.getItem("oal_user_role") || "lender";
+  const userEmail = localStorage.getItem("oal_user_email") || "lender@gmail.com";
+  const userName = localStorage.getItem("oal_user_name") || "Amit Verma (Lender Desk #104)";
 
   const menuItems = [
     { name: "Dashboard", path: "/lender/dashboard", icon: Home },
@@ -24,7 +33,8 @@ function LenderLayoutInner() {
     { name: "OAL Network Panel", path: "/lender/network-panel", icon: Compass },
     { name: "Analytics", path: "/lender/analytics", icon: BarChart2 },
     { name: "Reports", path: "/lender/reports", icon: FileText },
-    { name: "Billing & Subscription", path: "/lender/billing", icon: CreditCard },
+    { name: "Billing", path: "/lender/billing", icon: CreditCard },
+    { name: "Subscription", path: "/lender/subscription", icon: FileText },
     { name: "Profile", path: "/lender/profile", icon: User },
     { name: "Settings", path: "/lender/settings", icon: Settings },
   ];
@@ -46,14 +56,14 @@ function LenderLayoutInner() {
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex flex-col bg-slate-900 border-r border-slate-800 transition-all duration-300 md:translate-x-0 md:static ${
+        className={`fixed inset-y-0 left-0 z-50 flex flex-col bg-slate-900/95 backdrop-blur-md border-r border-slate-800/50 transition-all duration-300 md:translate-x-0 md:static ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } ${isCollapsed ? "w-20" : "w-60"}`}
       >
-        <div className="flex items-center justify-between h-16 px-4 border-b border-slate-800 bg-slate-900">
+        <div className="flex items-center justify-between h-16 px-4 border-b border-slate-800/50 bg-slate-900/50">
           {!isCollapsed ? (
-            <span className="text-sm font-bold tracking-wider text-slate-50 uppercase truncate">
-              Lender Portal
+            <span className="text-xs font-extrabold tracking-wider text-white uppercase bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent truncate">
+              Lender Portal Dashboard
             </span>
           ) : (
             <span className="text-xs font-bold tracking-wider text-indigo-400 uppercase mx-auto">
@@ -61,10 +71,10 @@ function LenderLayoutInner() {
             </span>
           )}
 
-          {/* Desktop Collapse Toggle */}
+          {/* Desktop Collapse Toggle Button */}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors cursor-pointer"
+            className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
             title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
             {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
@@ -106,18 +116,22 @@ function LenderLayoutInner() {
                     </span>
                   )}
                 </div>
-                {!isCollapsed && <span className="truncate">{item.name}</span>}
-                {!isCollapsed && isChat && unreadCount > 0 && (
-                  <span className="ml-auto bg-rose-500/20 text-rose-400 border border-rose-500/30 text-[9px] font-extrabold px-1.5 py-0.5 rounded-full">
-                    {unreadCount} New
-                  </span>
+                {!isCollapsed && (
+                  <>
+                    <span className="truncate">{item.name}</span>
+                    {isChat && unreadCount > 0 && (
+                      <span className="ml-auto bg-rose-500/20 text-rose-400 border border-rose-500/30 text-[9px] font-extrabold px-1.5 py-0.5 rounded-full">
+                        {unreadCount} New
+                      </span>
+                    )}
+                  </>
                 )}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-3 border-t border-slate-800 mt-auto">
+        <div className="p-3 border-t border-slate-800/50 mt-auto">
           <Link
             to="/auth/login"
             title={isCollapsed ? "Logout" : undefined}
@@ -134,17 +148,19 @@ function LenderLayoutInner() {
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top Header */}
-        <header className="flex items-center justify-between h-16 px-6 bg-slate-900 border-b border-slate-800 relative z-30">
+        <header className="flex items-center justify-between h-16 px-6 bg-slate-900/60 backdrop-blur-md border-b border-slate-800/50 relative z-30">
           <div className="flex items-center gap-3">
             <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(true)}>
               <Menu size={24} />
             </button>
+
+            {/* Desktop Top Header Collapse Toggle Shortcut */}
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="hidden md:flex items-center gap-2 text-xs text-slate-400 hover:text-slate-200 bg-slate-800/60 border border-slate-700/50 px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer"
+              className="hidden md:flex p-2 text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 rounded-xl transition-colors"
+              title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
             >
-              {isCollapsed ? <PanelLeft size={16} /> : <PanelLeftClose size={16} />}
-              <span>{isCollapsed ? "Expand Menu" : "Collapse Menu"}</span>
+              {isCollapsed ? <PanelLeft size={20} /> : <PanelLeftClose size={20} />}
             </button>
           </div>
 
@@ -163,21 +179,21 @@ function LenderLayoutInner() {
               )}
             </button>
 
-            {/* Dynamic Top Right Lender Profile & Quick Access Dropdown */}
+            {/* Dynamic Top Right Lender Profile Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                 className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-slate-800/80 border border-transparent hover:border-slate-700/60 transition-all cursor-pointer group"
               >
                 <div className="text-right hidden sm:block">
-                  <p className="text-xs font-bold text-slate-200 group-hover:text-white transition-colors">First Capital Partners</p>
-                  <p className="text-[10px] text-emerald-400 font-mono flex items-center justify-end gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
-                    Lender Verified
+                  <p className="text-xs font-bold text-slate-200 group-hover:text-white transition-colors">{userName}</p>
+                  <p className="text-[10px] text-indigo-400 font-mono flex items-center justify-end gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 inline-block animate-pulse" />
+                    Lender Active
                   </p>
                 </div>
 
-                <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 font-bold group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-md shadow-indigo-950/30">
+                <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 font-bold group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-md">
                   <User size={18} />
                 </div>
 
@@ -187,52 +203,29 @@ function LenderLayoutInner() {
               {/* Profile Dropdown Menu */}
               {profileDropdownOpen && (
                 <>
-                  <div className="fixed inset-0 z-40" onClick={() => setProfileDropdownOpen(false)} />
-                  <div className="absolute right-0 mt-2 w-64 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 p-3 space-y-2 animate-in fade-in zoom-in-95 duration-150 text-left">
+                  <div 
+                    className="fixed inset-0 z-40" 
+                    onClick={() => setProfileDropdownOpen(false)} 
+                  />
+                  <div className="absolute right-0 mt-2 w-64 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 p-3 space-y-2 animate-in fade-in zoom-in-95 duration-150">
                     <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
-                      <p className="text-xs font-bold text-white">First Capital Partners</p>
-                      <p className="text-[11px] text-slate-400 font-mono truncate">lender-ops@firstcapital.com</p>
+                      <p className="text-xs font-bold text-white">{userName}</p>
+                      <p className="text-[11px] text-slate-400 font-mono truncate">{userEmail}</p>
                       <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 uppercase">
-                        Lender Pro Clearance
+                        Institutional Lender
                       </span>
-                    </div>
-
-                    <div className="space-y-1 text-xs pt-1">
-                      <Link
-                        to="/lender/settings"
-                        onClick={() => setProfileDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-800/80 rounded-xl transition-colors font-medium"
-                      >
-                        <Settings size={15} className="text-indigo-400" />
-                        <span>System Settings</span>
-                      </Link>
-
-                      <Link
-                        to="/lender/profile"
-                        onClick={() => setProfileDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-800/80 rounded-xl transition-colors font-medium"
-                      >
-                        <User size={15} className="text-purple-400" />
-                        <span>View Profile</span>
-                      </Link>
-
-                      <Link
-                        to="/lender/billing"
-                        onClick={() => setProfileDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-800/80 rounded-xl transition-colors font-medium"
-                      >
-                        <CreditCard size={15} className="text-emerald-400" />
-                        <span>Billing & Invoices</span>
-                      </Link>
                     </div>
 
                     <div className="pt-2 border-t border-slate-800">
                       <button
                         onClick={() => {
                           setProfileDropdownOpen(false);
+                          localStorage.removeItem("oal_user_name");
+                          localStorage.removeItem("oal_user_email");
+                          localStorage.removeItem("oal_user_role");
                           navigate("/auth/login");
                         }}
-                        className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-500/10 hover:bg-red-600 text-red-400 hover:text-white text-xs font-bold rounded-xl border border-red-500/20 transition-all cursor-pointer"
+                        className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-500/10 hover:bg-red-600 text-red-400 hover:text-white text-xs font-bold rounded-xl border border-red-500/20 transition-all"
                       >
                         <LogOut size={14} />
                         Sign Out Account

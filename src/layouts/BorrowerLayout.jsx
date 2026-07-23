@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { 
   Menu, X, Home, FileText, UploadCloud, Cpu, Award, Bell, MessageSquare, 
-  Share2, Settings, User, LogOut, ChevronLeft, ChevronRight, PanelLeft, PanelLeftClose 
+  Share2, Settings, User, LogOut, ChevronLeft, ChevronRight, PanelLeft, PanelLeftClose, ChevronDown 
 } from "lucide-react";
 
 export default function BorrowerLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Dynamic Logged In Borrower Info
+  const userRole = localStorage.getItem("oal_user_role") || "borrower";
+  const userEmail = localStorage.getItem("oal_user_email") || "borrower@gmail.com";
+  const userName = localStorage.getItem("oal_user_name") || "Rajesh Sharma (Borrower)";
 
   const menuItems = [
     { name: "Dashboard", path: "/borrower/dashboard", icon: Home },
@@ -111,7 +118,7 @@ export default function BorrowerLayout() {
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top Header */}
-        <header className="flex items-center justify-between h-16 px-6 bg-slate-900 border-b border-slate-800">
+        <header className="flex items-center justify-between h-16 px-6 bg-slate-900 border-b border-slate-800 relative z-30">
           <div className="flex items-center gap-3">
             <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(true)}>
               <Menu size={24} />
@@ -127,11 +134,61 @@ export default function BorrowerLayout() {
             </button>
           </div>
 
-          <div className="flex items-center ml-auto space-x-4">
-            <span className="text-sm text-slate-300">Borrower</span>
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-200">
-              <User size={16} />
-            </div>
+          {/* Dynamic Top Right Borrower Profile Dropdown */}
+          <div className="relative ml-auto">
+            <button
+              onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+              className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-slate-800/80 border border-transparent hover:border-slate-700/60 transition-all cursor-pointer group"
+            >
+              <div className="text-right hidden sm:block">
+                <p className="text-xs font-bold text-slate-200 group-hover:text-white transition-colors">{userName}</p>
+                <p className="text-[10px] text-emerald-400 font-mono flex items-center justify-end gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                  Borrower Active
+                </p>
+              </div>
+
+              <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/30 text-blue-400 font-bold group-hover:bg-blue-600 group-hover:text-white transition-all shadow-md">
+                <User size={18} />
+              </div>
+
+              <ChevronDown size={14} className={`text-slate-400 transition-transform duration-200 ${profileDropdownOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {/* Profile Dropdown Menu */}
+            {profileDropdownOpen && (
+              <>
+                <div 
+                  className="fixed inset-0 z-40" 
+                  onClick={() => setProfileDropdownOpen(false)} 
+                />
+                <div className="absolute right-0 mt-2 w-64 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 p-3 space-y-2 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+                    <p className="text-xs font-bold text-white">{userName}</p>
+                    <p className="text-[11px] text-slate-400 font-mono truncate">{userEmail}</p>
+                    <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase">
+                      Borrower Account
+                    </span>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-800">
+                    <button
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        localStorage.removeItem("oal_user_name");
+                        localStorage.removeItem("oal_user_email");
+                        localStorage.removeItem("oal_user_role");
+                        navigate("/auth/login");
+                      }}
+                      className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-500/10 hover:bg-red-600 text-red-400 hover:text-white text-xs font-bold rounded-xl border border-red-500/20 transition-all"
+                    >
+                      <LogOut size={14} />
+                      Sign Out Account
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </header>
 
