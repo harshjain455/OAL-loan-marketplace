@@ -26,7 +26,7 @@ import BorrowerReferral from "./pages/Borrower/BorrowerReferral";
 import BorrowerSettings from "./pages/Borrower/BorrowerSettings";
 
 // Lender Pages
-
+import LenderDashboard from "./pages/Lender/LenderDashboard";
 import LenderQualifiedLeads from "./pages/Lender/LenderQualifiedLeads";
 import LenderAILeadAlerts from "./pages/Lender/LenderAILeadAlerts";
 import LenderBorrowerRankings from "./pages/Lender/LenderBorrowerRankings";
@@ -123,9 +123,9 @@ export default function App() {
           <Route path="settings" element={<BorrowerSettings />} />
         </Route>
 
-        {/* Lender Portal */}
         <Route path="/lender" element={<LenderLayout />}>
-          <Route index element={<Navigate to="/lender/qualified-leads" replace />} />
+          <Route index element={<Navigate to="/lender/dashboard" replace />} />
+          <Route path="dashboard" element={<LenderDashboard />} />
           <Route path="qualified-leads" element={<LenderQualifiedLeads />} />
           <Route path="lead-alerts" element={<LenderAILeadAlerts />} />
           <Route path="rankings" element={<LenderBorrowerRankings />} />
