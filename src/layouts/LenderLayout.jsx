@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { 
-  Menu, X, Home, Users, Bell, Award, Eye, FileText, Heart, MessageSquare, 
-  Briefcase, BarChart2, CreditCard, Settings, User, LogOut, ChevronLeft, ChevronRight, Compass 
-} from "lucide-react";
+import { Menu, X, Home, Users, Bell, Award, Eye, FileText, Heart, MessageSquare, Briefcase, BarChart2, CreditCard, Settings, User, LogOut, Compass, PanelLeft, PanelLeftClose, ChevronLeft, ChevronRight } from "lucide-react";
 import { ChatNotificationProvider, useChatNotification } from "../context/ChatNotificationContext";
 
 function LenderLayoutInner() {
@@ -49,32 +46,37 @@ function LenderLayoutInner() {
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex flex-col bg-slate-900 border-r border-slate-800/50 transform transition-all duration-300 md:translate-x-0 md:static ${
+        className={`fixed inset-y-0 left-0 z-50 flex flex-col bg-slate-900/95 backdrop-blur-md border-r border-slate-800/50 transition-all duration-300 md:translate-x-0 md:static ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } ${isCollapsed ? "w-20" : "w-64"}`}
+        } ${isCollapsed ? "w-20" : "w-60"}`}
       >
         <div className="flex items-center justify-between h-16 px-4 border-b border-slate-800/50 bg-slate-900/50">
           {!isCollapsed ? (
-            <span className="text-xs font-bold tracking-wider text-slate-50 uppercase truncate">LENDER PORTAL</span>
+            <span className="text-xs font-extrabold tracking-wider text-white uppercase bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent truncate">
+              Lender Portal Dashboard
+            </span>
           ) : (
-            <span className="text-xs font-bold tracking-wider text-blue-400 uppercase mx-auto">LND</span>
+            <span className="text-xs font-bold tracking-wider text-indigo-400 uppercase mx-auto">
+              OAL
+            </span>
           )}
-          
-          {/* Desktop Collapse Toggle */}
+
+          {/* Desktop Collapse Toggle Button */}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hidden md:flex p-1 rounded hover:bg-slate-800 text-slate-400 hover:text-slate-100 transition-colors"
+            className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
             title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
-            {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+            {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           </button>
 
+          {/* Mobile Close Button */}
           <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(false)}>
             <X size={20} />
           </button>
         </div>
 
-        <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
             const Icon = item.icon;
@@ -90,10 +92,10 @@ function LenderLayoutInner() {
                 title={isCollapsed ? item.name : undefined}
                 className={`flex items-center ${
                   isCollapsed ? "justify-center px-2" : "px-3.5"
-                } py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 group ${
+                } py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 group relative ${
                   isActive
-                    ? "bg-slate-800 text-slate-100"
-                    : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-100"
+                    ? "bg-gradient-to-r from-indigo-600/30 to-indigo-500/10 border border-indigo-500/30 text-white shadow-md shadow-indigo-950/20"
+                    : "text-slate-400 hover:bg-slate-800/40 hover:text-slate-200 border border-transparent"
                 }`}
               >
                 <div className={`relative ${!isCollapsed ? "mr-3" : ""}`}>
@@ -119,15 +121,15 @@ function LenderLayoutInner() {
           })}
         </nav>
 
-        <div className="p-3 border-t border-slate-800 mt-auto">
+        <div className="p-3 border-t border-slate-800/50 mt-auto">
           <Link
             to="/auth/login"
             title={isCollapsed ? "Logout" : undefined}
             className={`flex items-center ${
               isCollapsed ? "justify-center px-2" : "px-4"
-            } py-2.5 text-sm font-medium text-red-400 rounded-lg hover:bg-red-500/10 hover:text-red-300 transition-colors group`}
+            } py-2.5 text-xs font-semibold text-rose-400 rounded-xl hover:bg-rose-500/10 hover:text-rose-300 border border-transparent hover:border-rose-500/20 transition-all group`}
           >
-            <LogOut size={18} className={`text-red-400 group-hover:text-red-300 ${!isCollapsed ? "mr-3" : ""}`} />
+            <LogOut size={17} className={`flex-shrink-0 text-rose-400 group-hover:text-rose-300 ${!isCollapsed ? "mr-3" : ""}`} />
             {!isCollapsed && <span>Logout</span>}
           </Link>
         </div>
@@ -136,10 +138,21 @@ function LenderLayoutInner() {
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top Header */}
-        <header className="flex items-center justify-between h-16 px-6 bg-slate-900 border-b border-slate-800">
-          <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(true)}>
-            <Menu size={24} />
-          </button>
+        <header className="flex items-center justify-between h-16 px-6 bg-slate-900/60 backdrop-blur-md border-b border-slate-800/50">
+          <div className="flex items-center gap-3">
+            <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(true)}>
+              <Menu size={24} />
+            </button>
+
+            {/* Desktop Top Header Collapse Toggle Shortcut */}
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="hidden md:flex p-2 text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 rounded-xl transition-colors"
+              title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+            >
+              {isCollapsed ? <PanelLeft size={20} /> : <PanelLeftClose size={20} />}
+            </button>
+          </div>
 
           <div className="flex items-center ml-auto space-x-4">
             {/* Message Notification Bell */}
@@ -156,16 +169,10 @@ function LenderLayoutInner() {
               )}
             </button>
 
-            <Link
-              to="/lender/profile"
-              className="flex items-center space-x-3 hover:opacity-85 transition-opacity"
-              title="View Profile"
-            >
-              <span className="text-xs font-semibold text-slate-300">Lender Partner</span>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-200">
-                <User size={16} />
-              </div>
-            </Link>
+            <span className="text-sm text-slate-300">Lender</span>
+            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-200">
+              <User size={16} />
+            </div>
           </div>
         </header>
 
