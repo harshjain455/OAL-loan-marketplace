@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { MessageSquare, Send, ShieldAlert, Paperclip, CheckCheck, UserCheck } from "lucide-react";
+import { MessageSquare, Send, ShieldAlert, Paperclip, CheckCheck, UserCheck, CheckCircle2 } from "lucide-react";
 
 export default function BorrowerChat() {
+  const [toastMessage, setToastMessage] = useState("");
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 5000);
+  };
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -115,7 +120,7 @@ export default function BorrowerChat() {
         <form onSubmit={handleSend} className="p-4 bg-slate-950 border-t border-slate-800 flex items-center gap-3">
           <button
             type="button"
-            onClick={() => alert("File attachment option selected.")}
+            onClick={() => showToast("File attachment option selected.")}
             className="p-2.5 bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white rounded-lg transition-colors border border-slate-800"
             title="Attach File"
           >
@@ -136,6 +141,12 @@ export default function BorrowerChat() {
           </button>
         </form>
       </div>
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
+          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 }

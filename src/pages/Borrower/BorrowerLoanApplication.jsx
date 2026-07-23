@@ -14,6 +14,11 @@ export default function BorrowerLoanApplication() {
     employmentType: "Self-Employed / Business Owner",
     notes: ""
   });
+  const [toastMessage, setToastMessage] = useState("");
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 5000);
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,8 +26,10 @@ export default function BorrowerLoanApplication() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Application Submitted Successfully! Proceeding to Document Upload.");
-    navigate("/borrower/documents");
+    showToast("Application Submitted Successfully! Proceeding to Document Upload.");
+    setTimeout(() => {
+      navigate("/borrower/documents");
+    }, 1500);
   };
 
   return (
@@ -267,6 +274,12 @@ export default function BorrowerLoanApplication() {
           </div>
         )}
       </form>
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
+          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 }

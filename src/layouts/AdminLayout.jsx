@@ -143,10 +143,25 @@ export default function AdminLayout() {
           </div>
 
           <div className="flex items-center ml-auto space-x-4">
-            <span className="text-sm text-slate-300 font-medium">System Admin</span>
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 border border-slate-700 text-slate-200">
-              <User size={16} />
-            </div>
+            <Link
+              to="/admin/notifications"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors relative"
+              title="Notifications"
+            >
+              <Bell size={18} />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full" />
+            </Link>
+
+            <Link
+              to="/admin/settings"
+              className="flex items-center space-x-3 hover:opacity-85 transition-opacity"
+              title="View Profile"
+            >
+              <span className="text-xs font-semibold text-slate-300">System Admin</span>
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 border border-slate-700 text-slate-200">
+                <User size={16} />
+              </div>
+            </Link>
           </div>
         </header>
 

@@ -10,19 +10,24 @@ export default function BorrowerSettings() {
 
   const [mfaEnabled, setMfaEnabled] = useState(true);
   const [passwordForm, setPasswordForm] = useState({ current: "", newPass: "", confirm: "" });
+  const [toastMessage, setToastMessage] = useState("");
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 5000);
+  };
 
   const handleSaveProfile = (e) => {
     e.preventDefault();
-    alert("Profile details updated successfully!");
+    showToast("Profile details updated successfully!");
   };
 
   const handleSavePassword = (e) => {
     e.preventDefault();
     if (passwordForm.newPass !== passwordForm.confirm) {
-      alert("New passwords do not match!");
+      showToast("New passwords do not match!");
       return;
     }
-    alert("Password updated successfully!");
+    showToast("Password updated successfully!");
     setPasswordForm({ current: "", newPass: "", confirm: "" });
   };
 
@@ -53,7 +58,7 @@ export default function BorrowerSettings() {
             </p>
           </div>
           <button
-            onClick={() => alert("MFA protection is strictly required on OAL Network and cannot be disabled.")}
+            onClick={() => showToast("MFA protection is strictly required on OAL Network and cannot be disabled.")}
             className="px-4 py-2 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold rounded-lg shrink-0 cursor-default"
           >
             MFA Active (Enforced)
@@ -165,6 +170,12 @@ export default function BorrowerSettings() {
         </form>
 
       </div>
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
+          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 }

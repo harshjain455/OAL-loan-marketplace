@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { CheckCircle2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
@@ -11,12 +12,18 @@ const schema = zod.object({
 });
 
 export default function LenderOfferManagement() {
+  const [toastMessage, setToastMessage] = useState("");
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 5000);
+  };
+
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
   });
 
   const onSubmit = (data) => {
-    alert(`Offer Submitted for ${data.leadId}! Price: $${data.amount} at ${data.rate}%`);
+    showToast(`Offer Submitted for ${data.leadId}! Price: $${data.amount} at ${data.rate}%`);
   };
 
   return (
@@ -78,6 +85,12 @@ export default function LenderOfferManagement() {
           </button>
         </form>
       </div>
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
+          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 }
