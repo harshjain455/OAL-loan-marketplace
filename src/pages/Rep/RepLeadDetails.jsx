@@ -100,7 +100,7 @@ export default function RepLeadDetails() {
   const lead = leadsDb[leadId] || leadsDb["OAL-9842"];
 
   return (
-    <div className="space-y-6 text-slate-100 font-sans animate-fade-in max-w-5xl">
+    <div className="space-y-6 text-slate-100 font-sans animate-fade-in w-full">
       {/* Navigation */}
       <div className="flex items-center justify-between">
         <Link
