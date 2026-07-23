@@ -7,7 +7,9 @@ export default function BorrowerLayout() {
   const location = useLocation();
 
   const menuItems = [
-
+    { name: "Dashboard", path: "/borrower/dashboard", icon: Home },
+    { name: "Loan Application", path: "/borrower/loan-application", icon: FileText },
+    { name: "Documents", path: "/borrower/documents", icon: UploadCloud },
     { name: "AI Borrower Score", path: "/borrower/ai-score", icon: Cpu },
     { name: "Waiting Room / Offers", path: "/borrower/offers", icon: Award },
     { name: "Notifications", path: "/borrower/notifications", icon: Bell },
