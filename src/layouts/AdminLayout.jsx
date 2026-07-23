@@ -245,7 +245,6 @@ export default function AdminLayout() {
               )}
             </div>
           </div>
-          </div>
         </header>
 
         {/* Page Content */}

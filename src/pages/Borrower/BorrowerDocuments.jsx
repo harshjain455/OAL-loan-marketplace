@@ -37,11 +37,6 @@ export default function BorrowerDocuments() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Identity Proof");
   const [uploading, setUploading] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const showToast = (msg) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(""), 5000);
-  };
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadedSuccessMsg, setUploadedSuccessMsg] = useState("");
 
@@ -79,7 +74,6 @@ export default function BorrowerDocuments() {
 
       setDocuments((prevDocs) => [newDoc, ...prevDocs]);
       setUploading(false);
-      showToast(`${file.name} uploaded successfully and queued for KYC verification!`);
       setUploadedSuccessMsg(`File "${file.name}" uploaded successfully!`);
 
       if (fileInputRef.current) {
@@ -227,7 +221,9 @@ export default function BorrowerDocuments() {
               </div>
             </div>
           ))}
+        </div>
       </div>
+
       {/* 4. FILE UPLOAD POPUP MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
@@ -330,12 +326,6 @@ export default function BorrowerDocuments() {
         </div>
       )}
 
-      {toastMessage && (
-        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
-          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
-          <span>{toastMessage}</span>
-        </div>
-      )}
     </div>
   );
 }
