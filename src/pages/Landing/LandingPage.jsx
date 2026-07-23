@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowRight, Shield, Zap, Compass, Users, UserCheck, 
   ChevronRight, Lock, HelpCircle, Star, Sparkles, Server,
-  TrendingUp, CheckCircle, Clock, ShieldAlert, DollarSign
+  TrendingUp, CheckCircle2, Clock, ShieldAlert, DollarSign
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -414,7 +414,7 @@ export default function LandingPage() {
           <div className="relative border-l border-slate-850 ml-4 md:ml-8 space-y-8 max-w-3xl mx-auto">
             {[
               { title: "Account & MFA Setup", desc: "Borrower registers legal credentials and completes security SMS/Email checks.", icon: Lock },
-              { title: "KYC Document Upload", desc: "Direct file storage uploads for validation assessments.", icon: CheckCircle },
+              { title: "KYC Document Upload", desc: "Direct file storage uploads for validation assessments.", icon: CheckCircle2 },
               { title: "AI Borrower Score Evaluation", desc: "Automated iNV IQ engine scores risk profile factors.", icon: Sparkles },
               { title: "Bid Proposals", desc: "Qualified lenders view requests anonymously and submit interest offers.", icon: DollarSign },
               { title: "LetsWork Escalation", desc: "OAL Rep coordinates final approvals via split chat thread to release escrow funding.", icon: UserCheck }
