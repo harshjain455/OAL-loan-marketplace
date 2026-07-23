@@ -36,18 +36,20 @@ export default function LenderLayout() {
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex flex-col w-64 bg-slate-900 border-r border-slate-800 transform transition-transform duration-300 md:translate-x-0 md:static ${
+        className={`fixed inset-y-0 left-0 z-50 flex flex-col w-64 bg-slate-900/95 backdrop-blur-md border-r border-slate-800/50 transform transition-transform duration-300 md:translate-x-0 md:static ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800 bg-slate-900">
-          <span className="text-lg font-bold tracking-wider text-slate-50 uppercase">Lender Portal Dashboard</span>
+        <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800/50 bg-slate-900/50">
+          <span className="text-sm font-extrabold tracking-wider text-white uppercase bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+            Lender Portal Dashboard
+          </span>
           <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(false)}>
             <X size={20} />
           </button>
         </div>
 
-        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-3 py-5 space-y-1 overflow-y-auto">
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
             const Icon = item.icon;
@@ -56,25 +58,25 @@ export default function LenderLayout() {
                 key={item.name}
                 to={item.path}
                 onClick={() => setSidebarOpen(false)}
-                className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors group ${
+                className={`flex items-center px-3.5 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 group ${
                   isActive
-                    ? "bg-slate-800 text-slate-100"
-                    : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-100"
+                    ? "bg-gradient-to-r from-indigo-600/30 to-indigo-500/10 border border-indigo-500/30 text-white shadow-md shadow-indigo-950/20"
+                    : "text-slate-400 hover:bg-slate-800/40 hover:text-slate-200 border border-transparent"
                 }`}
               >
-                <Icon size={18} className="mr-3 text-slate-400 group-hover:text-slate-100" />
+                <Icon size={17} className={`mr-3 transition-colors ${isActive ? "text-indigo-400" : "text-slate-400 group-hover:text-slate-200"}`} />
                 {item.name}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-slate-800 mt-auto">
+        <div className="p-4 border-t border-slate-800/50 mt-auto">
           <Link
             to="/auth/login"
-            className="flex items-center px-4 py-3 text-sm font-medium text-red-400 rounded-lg hover:bg-red-500/10 hover:text-red-300 transition-colors group"
+            className="flex items-center px-4 py-2.5 text-xs font-semibold text-rose-400 rounded-xl hover:bg-rose-500/10 hover:text-rose-300 border border-transparent hover:border-rose-500/20 transition-all group"
           >
-            <LogOut size={18} className="mr-3 text-red-400 group-hover:text-red-300" />
+            <LogOut size={17} className="mr-3 text-rose-400 group-hover:text-rose-300" />
             Logout
           </Link>
         </div>
@@ -83,7 +85,7 @@ export default function LenderLayout() {
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top Header */}
-        <header className="flex items-center justify-between h-16 px-6 bg-slate-900 border-b border-slate-800">
+        <header className="flex items-center justify-between h-16 px-6 bg-slate-900/60 backdrop-blur-md border-b border-slate-800/50">
           <button className="md:hidden text-slate-400 hover:text-slate-100" onClick={() => setSidebarOpen(true)}>
             <Menu size={24} />
           </button>

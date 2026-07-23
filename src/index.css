@@ -28,6 +28,8 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
+  --color-slate-850: #151e32;
+
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
@@ -80,16 +82,25 @@ html, body, #root {
   display: block !important;
 }
 
+/* Hide scrollbar globally for Firefox & IE/Edge */
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Hide scrollbars globally for Chrome/Safari/Webkit */
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 html {
   margin: 0;
   padding: 0;
   overflow-y: auto !important;
   overflow-x: hidden;
   background-color: hsl(var(--background));
-
-  /* Hide scrollbar for Firefox & IE */
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
 }
 
 body {
@@ -98,15 +109,6 @@ body {
   color: hsl(var(--foreground));
   font-family: ui-sans-serif, system-ui, sans-serif;
   background-color: transparent;
-}
-
-/* Hide scrollbars for Webkit browsers (Chrome/Safari) */
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-#root::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
 }
 
 /* Custom Premium Animations */
