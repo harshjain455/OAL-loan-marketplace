@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { Menu, X, Home, Users, Bell, Award, Eye, FileText, Heart, MessageSquare, Briefcase, BarChart2, CreditCard, Settings, User, LogOut } from "lucide-react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, Home, Users, Bell, Award, Eye, FileText, Heart, MessageSquare, Briefcase, BarChart2, CreditCard, Settings, User, LogOut, Compass } from "lucide-react";
+import { ChatNotificationProvider, useChatNotification } from "../context/ChatNotificationContext";
 
-export default function LenderLayout() {
+function LenderLayoutInner() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { unreadCount, setUnreadCount } = useChatNotification();
 
   const menuItems = [
     { name: "Dashboard", path: "/lender/dashboard", icon: Home },
@@ -16,6 +19,7 @@ export default function LenderLayout() {
     { name: "Saved Leads", path: "/lender/saved-leads", icon: Heart },
     { name: "Communication", path: "/lender/communication", icon: MessageSquare },
     { name: "Offer Management", path: "/lender/offers", icon: Briefcase },
+    { name: "OAL Network Panel", path: "/lender/network-panel", icon: Compass },
     { name: "Analytics", path: "/lender/analytics", icon: BarChart2 },
     { name: "Reports", path: "/lender/reports", icon: FileText },
     { name: "Billing", path: "/lender/billing", icon: CreditCard },
@@ -23,6 +27,11 @@ export default function LenderLayout() {
     { name: "Profile", path: "/lender/profile", icon: User },
     { name: "Settings", path: "/lender/settings", icon: Settings },
   ];
+
+  const handleMessageBellClick = () => {
+    setUnreadCount(0);
+    navigate("/lender/communication");
+  };
 
   return (
     <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
@@ -53,19 +62,35 @@ export default function LenderLayout() {
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
             const Icon = item.icon;
+            const isChat = item.path === "/lender/communication";
             return (
               <Link
                 key={item.name}
                 to={item.path}
-                onClick={() => setSidebarOpen(false)}
+                onClick={() => {
+                  setSidebarOpen(false);
+                  if (isChat) setUnreadCount(0);
+                }}
                 className={`flex items-center px-3.5 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 group ${
                   isActive
                     ? "bg-gradient-to-r from-indigo-600/30 to-indigo-500/10 border border-indigo-500/30 text-white shadow-md shadow-indigo-950/20"
                     : "text-slate-400 hover:bg-slate-800/40 hover:text-slate-200 border border-transparent"
                 }`}
               >
-                <Icon size={17} className={`mr-3 transition-colors ${isActive ? "text-indigo-400" : "text-slate-400 group-hover:text-slate-200"}`} />
+                <div className="relative mr-3">
+                  <Icon size={17} className={`transition-colors ${isActive ? "text-indigo-400" : "text-slate-400 group-hover:text-slate-200"}`} />
+                  {isChat && unreadCount > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-rose-500 rounded-full text-[8px] font-black text-white flex items-center justify-center">
+                      {unreadCount > 9 ? "9+" : unreadCount}
+                    </span>
+                  )}
+                </div>
                 {item.name}
+                {isChat && unreadCount > 0 && (
+                  <span className="ml-auto bg-rose-500/20 text-rose-400 border border-rose-500/30 text-[9px] font-extrabold px-1.5 py-0.5 rounded-full">
+                    {unreadCount} New
+                  </span>
+                )}
               </Link>
             );
           })}
@@ -91,6 +116,20 @@ export default function LenderLayout() {
           </button>
 
           <div className="flex items-center ml-auto space-x-4">
+            {/* Message Notification Bell */}
+            <button
+              onClick={handleMessageBellClick}
+              className="relative p-2 rounded-xl bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors cursor-pointer"
+              title="Messages from OAL Rep"
+            >
+              <MessageSquare size={18} />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] font-black text-white flex items-center justify-center animate-pulse shadow-lg shadow-rose-500/40">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              )}
+            </button>
+
             <span className="text-sm text-slate-300">Lender</span>
             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-200">
               <User size={16} />
@@ -106,5 +145,13 @@ export default function LenderLayout() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function LenderLayout() {
+  return (
+    <ChatNotificationProvider>
+      <LenderLayoutInner />
+    </ChatNotificationProvider>
   );
 }

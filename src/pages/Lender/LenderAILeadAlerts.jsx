@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Bell, ShieldCheck, Award, Eye, Briefcase, Trash2, CheckCircle2, Zap, Settings, ShieldAlert, X, DollarSign, Calendar, TrendingUp } from "lucide-react";
+import { Bell, ShieldCheck, Award, Eye, Briefcase, Trash2, CheckCircle2, Zap, Settings, ShieldAlert, X, DollarSign, Calendar, TrendingUp, AlertTriangle } from "lucide-react";
 
 export default function LenderAILeadAlerts() {
   const [activeTab, setActiveTab] = useState("all");
@@ -103,6 +103,23 @@ export default function LenderAILeadAlerts() {
   const [offerAmount, setOfferAmount] = useState("");
   const [offerRate, setOfferRate] = useState("");
   const [offerDuration, setOfferDuration] = useState("");
+
+  // Delete Confirmation Modal States
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [alertToDelete, setAlertToDelete] = useState(null);
+
+  const promptDeleteAlert = (alert) => {
+    setAlertToDelete(alert);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDeleteAlert = () => {
+    if (alertToDelete) {
+      setAlerts(alerts.filter((alert) => alert.id !== alertToDelete.id));
+      setIsDeleteModalOpen(false);
+      setAlertToDelete(null);
+    }
+  };
 
   const markAsRead = (id) => {
     setAlerts(alerts.map((alert) => (alert.id === id ? { ...alert, isRead: true } : alert)));
@@ -288,7 +305,7 @@ export default function LenderAILeadAlerts() {
                       </button>
                     )}
                     <button
-                      onClick={() => deleteAlert(alert.id)}
+                      onClick={() => promptDeleteAlert(alert)}
                       className="p-2 text-slate-450 hover:text-rose-450 rounded-xl hover:bg-rose-500/10 transition-colors cursor-pointer"
                       title="Dismiss Alert"
                     >
@@ -347,6 +364,39 @@ export default function LenderAILeadAlerts() {
           </Link>
         </div>
       </div>
+
+      {/* DELETE CONFIRMATION MODAL */}
+      {isDeleteModalOpen && alertToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-[2px] animate-fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl relative overflow-hidden flex flex-col text-center space-y-4">
+            <div className="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center mx-auto">
+              <AlertTriangle size={24} />
+            </div>
+
+            <div>
+              <h3 className="text-lg font-bold text-white">Dismiss AI Lead Alert?</h3>
+              <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Are you sure you want to dismiss the alert for <span className="text-white font-bold">{alertToDelete.leadId}</span>?
+              </p>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                onClick={() => setIsDeleteModalOpen(false)}
+                className="flex-1 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer text-xs font-semibold"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDeleteAlert}
+                className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white transition-colors cursor-pointer text-xs font-semibold shadow-lg shadow-rose-950/30"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* VIEW DETAILS MODAL */}
       {isViewModalOpen && selectedLead && (
