@@ -13,6 +13,11 @@ export default function LenderBorrowerRankings() {
   // Form State for Submit Offer
   const [offerAmount, setOfferAmount] = useState("");
   const [offerRate, setOfferRate] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 5000);
+  };
   const [offerDuration, setOfferDuration] = useState("");
 
   const rankedBorrowers = [
@@ -146,10 +151,10 @@ export default function LenderBorrowerRankings() {
   const handleSubmitOffer = (e) => {
     e.preventDefault();
     if (!offerAmount || !offerRate || !offerDuration) {
-      alert("Please fill in all offer terms");
+      showToast("Please fill in all offer terms");
       return;
     }
-    alert(`Offer successfully submitted for Lead ${selectedLead.id}!\nAmount: $${Number(offerAmount).toLocaleString()}\nInterest Rate: ${offerRate}%\nDuration: ${offerDuration} Months`);
+    showToast(`Offer successfully submitted for Lead ${selectedLead.id}!\nAmount: $${Number(offerAmount).toLocaleString()}\nInterest Rate: ${offerRate}%\nDuration: ${offerDuration} Months`);
     setIsOfferModalOpen(false);
   };
 
@@ -607,6 +612,12 @@ export default function LenderBorrowerRankings() {
               </div>
             </form>
           </div>
+        </div>
+      )}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
+          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
+          <span>{toastMessage}</span>
         </div>
       )}
     </div>

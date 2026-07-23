@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as zod from "zod";
 import { Briefcase, Plus, Edit2, Trash2, X, CheckCircle2, Clock, AlertCircle, ShieldCheck, DollarSign, Percent, Calendar, AlertTriangle } from "lucide-react";
 
 const INITIAL_OFFERS = [
@@ -41,6 +44,12 @@ const STATUS_CONFIG = {
 };
 
 export default function LenderOfferManagement() {
+  const [toastMessage, setToastMessage] = useState("");
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 5000);
+  };
+
   const [offers, setOffers] = useState(INITIAL_OFFERS);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingOffer, setEditingOffer] = useState(null);
@@ -97,6 +106,7 @@ export default function LenderOfferManagement() {
             : o
         )
       );
+      showToast("Offer updated successfully!");
     } else {
       const newOffer = {
         id: `OFR-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -109,6 +119,7 @@ export default function LenderOfferManagement() {
         notes: formData.notes
       };
       setOffers((prev) => [newOffer, ...prev]);
+      showToast("New loan offer created successfully!");
     }
     setIsFormOpen(false);
     setEditingOffer(null);
@@ -124,6 +135,7 @@ export default function LenderOfferManagement() {
       setOffers((prev) => prev.filter((o) => o.id !== deleteTarget.id));
       setIsDeleteModalOpen(false);
       setDeleteTarget(null);
+      showToast("Offer deleted successfully!");
     }
   };
 
@@ -453,6 +465,13 @@ export default function LenderOfferManagement() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
+          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
+          <span>{toastMessage}</span>
         </div>
       )}
     </div>

@@ -18,10 +18,16 @@ export default function BorrowerSettings() {
   });
 
   const [passwordForm, setPasswordForm] = useState({ current: "", newPass: "", confirm: "" });
+  const [toastMessage, setToastMessage] = useState("");
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 5000);
+  };
   const [saveSuccessMsg, setSaveSuccessMsg] = useState("");
 
   const handleSaveProfile = (e) => {
     e.preventDefault();
+    showToast("Personal & Business Profile updated successfully!");
     setSaveSuccessMsg("Personal & Business Profile updated successfully!");
     setTimeout(() => setSaveSuccessMsg(""), 3000);
   };
@@ -29,9 +35,10 @@ export default function BorrowerSettings() {
   const handleSavePassword = (e) => {
     e.preventDefault();
     if (passwordForm.newPass !== passwordForm.confirm) {
-      alert("New passwords do not match!");
+      showToast("New passwords do not match!");
       return;
     }
+    showToast("Password updated successfully!");
     setSaveSuccessMsg("Password updated successfully!");
     setPasswordForm({ current: "", newPass: "", confirm: "" });
     setTimeout(() => setSaveSuccessMsg(""), 3000);
@@ -86,7 +93,7 @@ export default function BorrowerSettings() {
           </div>
           <button
             type="button"
-            onClick={() => alert("MFA protection is strictly enforced on OAL Network and cannot be disabled.")}
+            onClick={() => showToast("MFA protection is strictly required on OAL Network and cannot be disabled.")}
             className="px-4 py-2 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold rounded-xl shrink-0 cursor-default self-start sm:self-auto"
           >
             MFA Active (Enforced)
@@ -211,7 +218,6 @@ export default function BorrowerSettings() {
         </form>
 
       </div>
-
       {/* 4. Notification Preferences */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xl">
         <h2 className="text-sm font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
@@ -220,7 +226,7 @@ export default function BorrowerSettings() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-850 flex items-center justify-between gap-3">
+          <div className="p-4 bg-slate-950 rounded-xl border border-slate-855 flex items-center justify-between gap-3">
             <div>
               <span className="font-bold text-white block">Email Notifications</span>
               <span className="text-[11px] text-slate-400">Receive application updates via email</span>
@@ -233,7 +239,7 @@ export default function BorrowerSettings() {
             />
           </div>
 
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-850 flex items-center justify-between gap-3">
+          <div className="p-4 bg-slate-950 rounded-xl border border-slate-855 flex items-center justify-between gap-3">
             <div>
               <span className="font-bold text-white block">SMS Loan Alerts</span>
               <span className="text-[11px] text-slate-400">Urgent SMS notifications for bids</span>
@@ -248,6 +254,12 @@ export default function BorrowerSettings() {
         </div>
       </div>
 
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
+          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Send, User, Building, AlertCircle, Check } from "lucide-react";
 
@@ -15,6 +15,9 @@ export default function RepLetsWorkChat() {
   ];
 
   const currentChat = activeChats.find(chat => chat.id === borrowerParam) || activeChats[0];
+
+  // Feed selection: "borrower" or "lender"
+  const [activeFeed, setActiveFeed] = useState("borrower");
 
   // Chats local state database
   const [chatDatabase, setChatDatabase] = useState({
@@ -123,83 +126,111 @@ export default function RepLetsWorkChat() {
           </div>
         </div>
 
-        {/* Right Side: Dual Chat Panel */}
-        <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Borrower Chat Thread */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl flex flex-col h-[450px] overflow-hidden shadow-lg">
-            <div className="p-4 bg-slate-950 border-b border-slate-850 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <User size={16} className="text-blue-400" />
-                <span className="font-bold text-xs text-slate-200">{currentChat.name} (Borrower)</span>
-              </div>
-              <span className="text-[9px] font-semibold text-emerald-400 flex items-center gap-1">
-                <Check size={10} /> Legal Profile
-              </span>
-            </div>
-            
-            <div className="flex-1 p-4 overflow-y-auto space-y-3">
-              {chatDatabase[currentChat.id]?.borrower.map((msg, idx) => (
-                <div key={idx} className={`flex flex-col ${msg.sender === "Rep" ? "items-end" : "items-start"}`}>
-                  <div className={`p-2.5 rounded-xl text-xs max-w-[85%] ${
-                    msg.sender === "Rep" ? "bg-blue-600 text-slate-100" : "bg-slate-800 text-slate-200"
-                  }`}>
-                    {msg.text}
-                  </div>
-                  <span className="text-[9px] text-slate-500 mt-1 px-1">{msg.time}</span>
-                </div>
-              ))}
-            </div>
-
-            <form onSubmit={handleBorrowerSend} className="p-3 bg-slate-950 border-t border-slate-850 flex gap-2">
-              <input
-                type="text"
-                value={borrowerInput}
-                onChange={(e) => setBorrowerInput(e.target.value)}
-                className="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
-                placeholder={`Message ${currentChat.name}...`}
-              />
-              <button type="submit" className="p-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors text-white">
-                <Send size={14} />
-              </button>
-            </form>
+        {/* Right Side: Single Toggleable Chat Panel */}
+        <div className="lg:col-span-3 space-y-4">
+          {/* Feed Switch Toggle Buttons */}
+          <div className="flex gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-xl max-w-md">
+            <button
+              onClick={() => setActiveFeed("borrower")}
+              className={`flex-1 py-2 px-4 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                activeFeed === "borrower"
+                  ? "bg-blue-600 text-white shadow-lg"
+                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+              }`}
+            >
+              <User size={14} />
+              <span>Borrower ({currentChat.name})</span>
+            </button>
+            <button
+              onClick={() => setActiveFeed("lender")}
+              className={`flex-1 py-2 px-4 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                activeFeed === "lender"
+                  ? "bg-indigo-600 text-white shadow-lg"
+                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+              }`}
+            >
+              <Building size={14} />
+              <span>Lender (Anonymous)</span>
+            </button>
           </div>
 
-          {/* Lender Chat Thread */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl flex flex-col h-[450px] overflow-hidden shadow-lg">
-            <div className="p-4 bg-slate-950 border-b border-slate-850 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Building size={16} className="text-indigo-400" />
-                <span className="font-bold text-xs text-slate-200">{currentChat.lender}</span>
-              </div>
-              <span className="text-[9px] font-semibold text-slate-400">Anonymous Lender</span>
-            </div>
-            
-            <div className="flex-1 p-4 overflow-y-auto space-y-3">
-              {chatDatabase[currentChat.id]?.lender.map((msg, idx) => (
-                <div key={idx} className={`flex flex-col ${msg.sender === "Rep" ? "items-end" : "items-start"}`}>
-                  <div className={`p-2.5 rounded-xl text-xs max-w-[85%] ${
-                    msg.sender === "Rep" ? "bg-indigo-600 text-slate-100" : "bg-slate-800 text-slate-200"
-                  }`}>
-                    {msg.text}
-                  </div>
-                  <span className="text-[9px] text-slate-500 mt-1 px-1">{msg.time}</span>
+          {activeFeed === "borrower" ? (
+            /* Borrower Chat Thread */
+            <div className="bg-slate-900 border border-slate-800 rounded-xl flex flex-col h-[450px] overflow-hidden shadow-lg animate-fade-in">
+              <div className="p-4 bg-slate-950 border-b border-slate-850 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <User size={16} className="text-blue-400" />
+                  <span className="font-bold text-xs text-slate-200">{currentChat.name} (Borrower)</span>
                 </div>
-              ))}
-            </div>
+                <span className="text-[9px] font-semibold text-emerald-400 flex items-center gap-1">
+                  <Check size={10} /> Legal Profile
+                </span>
+              </div>
+              
+              <div className="flex-1 p-4 overflow-y-auto space-y-3">
+                {chatDatabase[currentChat.id]?.borrower.map((msg, idx) => (
+                  <div key={idx} className={`flex flex-col ${msg.sender === "Rep" ? "items-end" : "items-start"}`}>
+                    <div className={`p-2.5 rounded-xl text-xs max-w-[85%] ${
+                      msg.sender === "Rep" ? "bg-blue-600 text-slate-100" : "bg-slate-850 text-slate-200"
+                    }`}>
+                      {msg.text}
+                    </div>
+                    <span className="text-[9px] text-slate-500 mt-1 px-1">{msg.time}</span>
+                  </div>
+                ))}
+              </div>
 
-            <form onSubmit={handleLenderSend} className="p-3 bg-slate-950 border-t border-slate-850 flex gap-2">
-              <input
-                type="text"
-                value={lenderInput}
-                onChange={(e) => setLenderInput(e.target.value)}
-                className="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
-                placeholder="Message Lender..."
-              />
-              <button type="submit" className="p-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors text-white">
-                <Send size={14} />
-              </button>
-            </form>
-          </div>
+              <form onSubmit={handleBorrowerSend} className="p-3 bg-slate-950 border-t border-slate-850 flex gap-2">
+                <input
+                  type="text"
+                  value={borrowerInput}
+                  onChange={(e) => setBorrowerInput(e.target.value)}
+                  className="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+                  placeholder={`Message ${currentChat.name}...`}
+                />
+                <button type="submit" className="p-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors text-white">
+                  <Send size={14} />
+                </button>
+              </form>
+            </div>
+          ) : (
+            /* Lender Chat Thread */
+            <div className="bg-slate-900 border border-slate-800 rounded-xl flex flex-col h-[450px] overflow-hidden shadow-lg animate-fade-in">
+              <div className="p-4 bg-slate-950 border-b border-slate-850 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Building size={16} className="text-indigo-400" />
+                  <span className="font-bold text-xs text-slate-200">{currentChat.lender}</span>
+                </div>
+                <span className="text-[9px] font-semibold text-slate-400">Anonymous Lender</span>
+              </div>
+              
+              <div className="flex-1 p-4 overflow-y-auto space-y-3">
+                {chatDatabase[currentChat.id]?.lender.map((msg, idx) => (
+                  <div key={idx} className={`flex flex-col ${msg.sender === "Rep" ? "items-end" : "items-start"}`}>
+                    <div className={`p-2.5 rounded-xl text-xs max-w-[85%] ${
+                      msg.sender === "Rep" ? "bg-indigo-600 text-slate-100" : "bg-slate-850 text-slate-200"
+                    }`}>
+                      {msg.text}
+                    </div>
+                    <span className="text-[9px] text-slate-500 mt-1 px-1">{msg.time}</span>
+                  </div>
+                ))}
+              </div>
+
+              <form onSubmit={handleLenderSend} className="p-3 bg-slate-950 border-t border-slate-850 flex gap-2">
+                <input
+                  type="text"
+                  value={lenderInput}
+                  onChange={(e) => setLenderInput(e.target.value)}
+                  className="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                  placeholder="Message Lender..."
+                />
+                <button type="submit" className="p-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors text-white">
+                  <Send size={14} />
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,16 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Heart, Trash2, Eye, MessageSquare } from "lucide-react";
 
 export default function RepSavedLeads() {
-  const [savedLeads, setSavedLeads] = useState([
+  const leadsPool = [
     { id: "OAL-9842", name: "John Doe", amount: "$75,000", purpose: "Commercial Real Estate", score: 94 },
+    { id: "OAL-1102", name: "Sarah Jenkins", amount: "$300,000", purpose: "Business Expansion", score: 88 },
+    { id: "OAL-5593", name: "David Vance", amount: "$150,000", purpose: "Debt Consolidation", score: 72 },
     { id: "OAL-2291", name: "Elena Rostova", amount: "$500,000", purpose: "Equipment Financing", score: 91 }
-  ]);
+  ];
+
+  // Load saved lead IDs from localStorage
+  const [savedIds, setSavedIds] = useState(() => {
+    const raw = localStorage.getItem("oal_rep_saved_leads");
+    if (raw) {
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return ["OAL-9842", "OAL-2291"];
+      }
+    }
+    return ["OAL-9842", "OAL-2291"];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("oal_rep_saved_leads", JSON.stringify(savedIds));
+  }, [savedIds]);
 
   const removeLead = (id) => {
-    setSavedLeads(savedLeads.filter(lead => lead.id !== id));
+    setSavedIds(savedIds.filter(savedId => savedId !== id));
   };
+
+  // Filter pool by saved IDs
+  const savedLeads = leadsPool.filter(lead => savedIds.includes(lead.id));
 
   return (
     <div className="space-y-6 text-slate-100 font-sans animate-fade-in">
@@ -20,10 +42,11 @@ export default function RepSavedLeads() {
       </div>
 
       {savedLeads.length === 0 ? (
-        <div className="p-6 bg-slate-900 border border-slate-800 rounded-xl text-center space-y-2">
-          <p className="text-sm text-slate-500">No saved leads.</p>
-          <Link to="/rep/qualified-leads" className="text-xs text-blue-400 hover:underline">
-            Browse Assigned Leads
+        <div className="p-8 bg-slate-900 border border-slate-800 rounded-xl text-center space-y-3">
+          <Heart size={36} className="text-slate-600 mx-auto" />
+          <p className="text-sm text-slate-400">No saved leads found.</p>
+          <Link to="/rep/qualified-leads" className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-lg transition-colors">
+            Browse Qualified Leads
           </Link>
         </div>
       ) : (
@@ -48,7 +71,7 @@ export default function RepSavedLeads() {
               <div className="flex gap-2">
                 <Link
                   to={`/rep/lead-details?id=${lead.id}`}
-                  className="flex-1 py-1.5 bg-slate-850 hover:bg-slate-800 rounded text-center text-xs font-semibold text-slate-300 transition-colors"
+                  className="flex-1 py-1.5 bg-slate-850 hover:bg-slate-800 rounded border border-slate-800 text-center text-xs font-semibold text-slate-300 transition-colors"
                 >
                   Details
                 </Link>

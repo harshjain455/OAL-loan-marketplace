@@ -16,6 +16,11 @@ export default function BorrowerLoanApplication() {
     existingDebt: "2500",
     notes: ""
   });
+  const [toastMessage, setToastMessage] = useState("");
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 5000);
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,7 +30,7 @@ export default function BorrowerLoanApplication() {
     e.preventDefault();
     setIsSubmitted(true);
     setIsModalOpen(false);
-    // Stay on this page so user can see updated summary & status
+    showToast("Application Submitted Successfully!");
   };
 
   return (
@@ -402,6 +407,12 @@ export default function BorrowerLoanApplication() {
         </div>
       )}
 
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
+          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 }

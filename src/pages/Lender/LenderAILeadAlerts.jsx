@@ -129,8 +129,17 @@ export default function LenderAILeadAlerts() {
     setAlerts(alerts.map((alert) => ({ ...alert, isRead: true })));
   };
 
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+
   const deleteAlert = (id) => {
     setAlerts(alerts.filter((alert) => alert.id !== id));
+    showToast("Alert successfully dismissed.");
+  };
+
+  const [toastMessage, setToastMessage] = useState("");
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 5000);
   };
 
   const openViewModal = (lead) => {
@@ -149,10 +158,10 @@ export default function LenderAILeadAlerts() {
   const handleSubmitOffer = (e) => {
     e.preventDefault();
     if (!offerAmount || !offerRate || !offerDuration) {
-      alert("Please fill in all offer terms");
+      showToast("Please fill in all offer terms");
       return;
     }
-    alert(`Offer successfully submitted for Lead ${selectedLead.id}!\nAmount: $${Number(offerAmount).toLocaleString()}\nInterest Rate: ${offerRate}%\nDuration: ${offerDuration} Months`);
+    showToast(`Offer successfully submitted for Lead ${selectedLead.id}!\nAmount: $${Number(offerAmount).toLocaleString()}\nInterest Rate: ${offerRate}%\nDuration: ${offerDuration} Months`);
     setIsOfferModalOpen(false);
   };
 
@@ -621,6 +630,51 @@ export default function LenderAILeadAlerts() {
               </div>
             </form>
           </div>
+        </div>
+      )}
+      {/* Dismiss Confirmation Modal */}
+      {confirmDeleteId && (
+        <div className="fixed inset-0 bg-slate-950/80 flex items-center justify-center p-4 z-50">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 space-y-6 relative shadow-2xl animate-scale-in">
+            <button
+              onClick={() => setConfirmDeleteId(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="space-y-2">
+              <h2 className="text-lg font-bold text-slate-100">Dismiss Notification Alert?</h2>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Are you sure you want to dismiss this lead match alert? This alert will be permanently removed from your feed.
+              </p>
+            </div>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                onClick={() => setConfirmDeleteId(null)}
+                className="px-4 py-2 border border-slate-800 hover:bg-slate-850 text-slate-400 hover:text-slate-200 text-xs font-semibold rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  deleteAlert(confirmDeleteId);
+                  setConfirmDeleteId(null);
+                }}
+                className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg transition-colors shadow-lg"
+              >
+                Yes, Dismiss Alert
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-emerald-500 text-slate-100 p-4 rounded-xl shadow-2xl flex items-start gap-2 z-50 text-xs animate-bounce max-w-sm whitespace-pre-line">
+          <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
+          <span>{toastMessage}</span>
         </div>
       )}
     </div>
