@@ -55,13 +55,13 @@ export default function BorrowerDashboard() {
     avatarInitials: "SJ"
   };
 
-  // Node Points with Exact SVG Coordinates (Ensures no edge cropping & large hit targets)
+  // Node Points with Exact SVG Coordinates
   const graphPoints = [
-    { label: "M1", amount: "$3,342", principal: "$2,750", interest: "$592", x: 15, y: 75 },
+    { label: "M1", amount: "$3,342", principal: "$2,750", interest: "$592", x: 20, y: 75 },
     { label: "M6", amount: "$3,342", principal: "$2,850", interest: "$492", x: 130, y: 38 },
     { label: "M12", amount: "$3,342", principal: "$2,985", interest: "$357", x: 250, y: 62 },
     { label: "M18", amount: "$3,342", principal: "$3,120", interest: "$222", x: 370, y: 22 },
-    { label: "M24", amount: "$3,342", principal: "$3,276", interest: "$66", x: 485, y: 10 },
+    { label: "M24", amount: "$3,342", principal: "$3,276", interest: "$66", x: 480, y: 10 },
   ];
 
   const lenderBids = [
@@ -175,7 +175,7 @@ export default function BorrowerDashboard() {
 
       </div>
 
-      {/* 3. GRAPH SECTION WITH STABLE CLICKABLE HIGHLIGHTS & ZERO BLINKING */}
+      {/* 3. GRAPH SECTION (VERTICAL DASHED LINE REMOVED) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
         {/* Left Column (Spans 2): Single Wave Graph */}
@@ -189,14 +189,14 @@ export default function BorrowerDashboard() {
                 Loan Repayment Analytics Graph
               </h2>
               <p className="text-[11px] text-slate-400 mt-0.5">
-                Click any node or month tab to highlight node metrics.
+                Click or hover over any node to inspect data breakdown.
               </p>
             </div>
 
             {/* Controls */}
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1.5 text-xs font-semibold text-indigo-400">
-                <span className="w-2.5 h-2.5 rounded-full bg-indigo-400 shadow-sm shadow-indigo-400/50"></span> Active Wave Curve
+                <span className="w-2.5 h-2.5 rounded-full bg-indigo-400 shadow-sm shadow-indigo-400/50"></span> Interactive Wave
               </span>
 
               <div className="flex bg-slate-950 p-0.5 rounded-lg border border-slate-800 text-[10px]">
@@ -216,29 +216,29 @@ export default function BorrowerDashboard() {
             </div>
           </div>
 
-          {/* Active Highlight Info Bar */}
-          <div className="flex items-center justify-between bg-slate-950/80 border border-indigo-500/30 p-3 rounded-xl text-xs transition-all shadow-inner">
+          {/* SLEEK, COMPACT DATA DISPLAY BAR */}
+          <div className="flex flex-wrap items-center justify-between bg-slate-950/50 border border-slate-850 px-3 py-1.5 rounded-lg text-[11px] gap-2">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 bg-indigo-600 text-white font-bold rounded text-[11px] shadow-sm">
-                Selected: {graphPoints[hoveredPoint].label} Node
+              <span className="px-2 py-0.5 bg-indigo-600/80 text-white font-bold rounded text-[10px]">
+                Node: {graphPoints[hoveredPoint].label}
               </span>
-              <span className="text-slate-300">Principal Paid: <strong className="text-white">{graphPoints[hoveredPoint].principal}</strong></span>
+              <span className="text-slate-400">Principal: <span className="font-semibold text-white">{graphPoints[hoveredPoint].principal}</span></span>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="text-slate-400">Interest Portion: <strong className="text-purple-400">{graphPoints[hoveredPoint].interest}</strong></span>
-              <span className="text-slate-400">Monthly EMI: <strong className="text-emerald-400">{graphPoints[hoveredPoint].amount}</strong></span>
+            <div className="flex items-center gap-3 text-[10.5px]">
+              <span className="text-slate-400">Interest: <span className="font-semibold text-purple-400">{graphPoints[hoveredPoint].interest}</span></span>
+              <span className="text-slate-400">Monthly EMI: <span className="font-bold text-emerald-400">{graphPoints[hoveredPoint].amount}</span></span>
             </div>
           </div>
 
-          {/* SINGLE WAVE GRAPH WITH STABLE HIT TARGETS */}
+          {/* SINGLE WAVE GRAPH (VERTICAL DASHED GUIDELINE REMOVED) */}
           <div className="flex items-stretch gap-2 pt-1">
             
             {/* Y-Axis Labels */}
-            <div className="flex flex-col justify-between text-[10px] font-bold text-slate-500 py-1 pr-1 shrink-0 select-none">
-              <span>$4,000</span>
-              <span>$3,000</span>
-              <span>$2,000</span>
-              <span>$1,000</span>
+            <div className="flex flex-col justify-between text-[10px] font-semibold text-slate-500 py-1 pr-1 shrink-0 select-none">
+              <span>$4k</span>
+              <span>$3k</span>
+              <span>$2k</span>
+              <span>$1k</span>
               <span>$0</span>
             </div>
 
@@ -248,68 +248,69 @@ export default function BorrowerDashboard() {
                 <svg className="w-full h-full overflow-visible" viewBox="0 0 500 100" preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="singleWaveFillNoBox" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#818cf8" stopOpacity="0.45" />
+                      <stop offset="0%" stopColor="#818cf8" stopOpacity="0.4" />
                       <stop offset="100%" stopColor="#818cf8" stopOpacity="0.0" />
                     </linearGradient>
                   </defs>
 
-                  {/* Horizontal Grid Lines */}
-                  <line x1="0" y1="0" x2="500" y2="0" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
-                  <line x1="0" y1="25" x2="500" y2="25" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
-                  <line x1="0" y1="50" x2="500" y2="50" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
-                  <line x1="0" y1="75" x2="500" y2="75" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
-                  <line x1="0" y1="100" x2="500" y2="100" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
+                  {/* Faint Horizontal Background Grid Lines */}
+                  <line x1="0" y1="0" x2="500" y2="0" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
+                  <line x1="0" y1="25" x2="500" y2="25" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
+                  <line x1="0" y1="50" x2="500" y2="50" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
+                  <line x1="0" y1="75" x2="500" y2="75" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
+                  <line x1="0" y1="100" x2="500" y2="100" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
 
-                  {/* ACTIVE SELECTED NODE VERTICAL GUIDELINE */}
-                  {hoveredPoint !== null && (
-                    <line 
-                      x1={graphPoints[hoveredPoint].x} 
-                      y1="0" 
-                      x2={graphPoints[hoveredPoint].x} 
-                      y2="100" 
-                      stroke="#818cf8" 
-                      strokeWidth="1.5" 
-                      strokeDasharray="3 3" 
-                      opacity="0.8" 
-                    />
-                  )}
-
-                  {/* WAVE GRADIENT AREA FILL */}
+                  {/* WAVE AREA GRADIENT FILL */}
                   <path 
                     d="M 0,75 C 60,35 110,85 170,40 C 230,10 290,65 350,30 C 410,50 450,15 500,10 L 500,100 L 0,100 Z" 
                     fill="url(#singleWaveFillNoBox)" 
                   />
 
-                  {/* SINGLE SMOOTH WAVE STROKE */}
+                  {/* SMOOTH WAVE LINE STROKE */}
                   <path 
                     d="M 0,75 C 60,35 110,85 170,40 C 230,10 290,65 350,30 C 410,50 450,15 500,10" 
                     fill="none" 
                     stroke="#818cf8" 
-                    strokeWidth="3.5" 
+                    strokeWidth="3" 
                     strokeLinecap="round"
                   />
 
-                  {/* INTERACTIVE NODES: STABLE CLICK TARGETS & ACTIVE GLOW */}
+                  {/* SLEEK FLOATING MINI HOVER TOOLTIP CAPSULE OVER NODE */}
+                  {hoveredPoint !== null && (
+                    <g transform={`translate(${Math.min(Math.max(graphPoints[hoveredPoint].x - 40, 5), 415)}, ${Math.max(graphPoints[hoveredPoint].y - 24, 2)})`}>
+                      <rect width="80" height="18" rx="9" fill="#1e1b4b" stroke="#818cf8" strokeWidth="1.2" opacity="0.95" />
+                      <text x="40" y="12" textAnchor="middle" fill="#ffffff" fontSize="8.5" fontWeight="600">
+                        {graphPoints[hoveredPoint].label}: {graphPoints[hoveredPoint].principal}
+                      </text>
+                    </g>
+                  )}
+
+                  {/* INTERACTIVE NODES: HOVER + CLICK HANDLERS */}
                   {graphPoints.map((pt, idx) => {
                     const isSelected = hoveredPoint === idx;
                     return (
-                      <g key={idx} className="cursor-pointer" onClick={() => setHoveredPoint(idx)}>
-                        {/* Invisible Large Hit Target Circle to prevent slipping */}
-                        <circle cx={pt.x} cy={pt.y} r="16" fill="transparent" />
+                      <g 
+                        key={idx} 
+                        className="cursor-pointer" 
+                        onMouseEnter={() => setHoveredPoint(idx)}
+                        onClick={() => setHoveredPoint(idx)}
+                      >
+                        {/* Invisible Large Hit Target Circle */}
+                        <circle cx={pt.x} cy={pt.y} r="18" fill="transparent" />
 
                         {/* Active Selection Glow Ring */}
                         {isSelected && (
-                          <circle cx={pt.x} cy={pt.y} r="10" stroke="#38bdf8" strokeWidth="2.5" fill="none" opacity="0.6" />
+                          <circle cx={pt.x} cy={pt.y} r="8" stroke="#38bdf8" strokeWidth="2" fill="none" opacity="0.8" />
                         )}
 
                         {/* Solid Node Circle */}
                         <circle
                           cx={pt.x}
                           cy={pt.y}
-                          r={isSelected ? "6.5" : "4.5"}
+                          r={isSelected ? "5.5" : "4"}
                           fill={isSelected ? "#38bdf8" : "#6366f1"}
                           stroke="#ffffff"
-                          strokeWidth={isSelected ? "2.5" : "1.8"}
+                          strokeWidth={isSelected ? "2" : "1.5"}
                         />
                       </g>
                     );
@@ -317,18 +318,19 @@ export default function BorrowerDashboard() {
                 </svg>
               </div>
 
-              {/* X-AXIS MONTH BUTTONS WITH ACTIVE SELECTION HIGHLIGHT */}
-              <div className="flex justify-between text-[11px] font-bold text-slate-400 px-1 pt-1">
+              {/* X-AXIS MONTH BUTTONS WITH HOVER & ACTIVE SELECTION */}
+              <div className="flex justify-between text-[11px] font-bold text-slate-400 px-1">
                 {graphPoints.map((pt, idx) => {
                   const isSelected = hoveredPoint === idx;
                   return (
                     <button
                       key={idx}
+                      onMouseEnter={() => setHoveredPoint(idx)}
                       onClick={() => setHoveredPoint(idx)}
-                      className={`px-3 py-1 rounded-lg transition-all ${
+                      className={`px-2.5 py-0.5 rounded-md transition-all ${
                         isSelected 
-                          ? "bg-indigo-600 text-white font-extrabold shadow-md shadow-indigo-600/30 ring-1 ring-indigo-400" 
-                          : "bg-slate-950/60 text-slate-400 hover:text-white hover:bg-slate-850"
+                          ? "bg-indigo-600 text-white font-bold shadow-sm shadow-indigo-600/30" 
+                          : "text-slate-400 hover:text-white hover:bg-slate-850"
                       }`}
                     >
                       {pt.label}
