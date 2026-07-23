@@ -74,7 +74,18 @@
   border-color: hsl(var(--border));
 }
 
-/* Stable HTML and Body styles: Removed height: 100% to enable standard window-level mouse wheel scrolling */
+/* HIDE ALL SCROLLBARS GLOBALLY ACROSS ALL BROWSERS AND ELEMENTS */
+* {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE & Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+  width: 0 !important;
+  height: 0 !important;
+}
+
 html, body, #root {
   width: 100% !important;
   height: auto !important;
