@@ -73,6 +73,7 @@ import NetworkSettings from "./pages/Network/NetworkSettings";
 
 // Admin Pages
 
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminBorrowers from "./pages/Admin/AdminBorrowers";
 import AdminLenders from "./pages/Admin/AdminLenders";
 import AdminLoanApplications from "./pages/Admin/AdminLoanApplications";
@@ -174,7 +175,8 @@ export default function App() {
 
         {/* Admin Portal */}
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="/admin/borrowers" replace />} />
+          <Route index element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="borrowers" element={<AdminBorrowers />} />
           <Route path="lenders" element={<AdminLenders />} />
           <Route path="loan-applications" element={<AdminLoanApplications />} />

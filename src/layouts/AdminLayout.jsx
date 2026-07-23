@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Menu, X, Home, Users, UserCheck, FileText, Cpu, ShieldAlert, FolderGit, Network, Bell, Link2, Megaphone, DollarSign, Edit, BarChart, LifeBuoy, FileCode, Settings, Shield, User, LogOut } from "lucide-react";
+import { Menu, X, Home, Users, UserCheck, FileText, Cpu, ShieldAlert, FolderGit, Network, Bell, Link2, Megaphone, DollarSign, Edit, BarChart, LifeBuoy, FileCode, Settings, Shield, User, LogOut, CreditCard } from "lucide-react";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
   const menuItems = [
-
+    { name: "Dashboard", path: "/admin/dashboard", icon: Home },
     { name: "Borrowers", path: "/admin/borrowers", icon: Users },
     { name: "Lenders", path: "/admin/lenders", icon: UserCheck },
     { name: "Loan Applications", path: "/admin/loan-applications", icon: FileText },

@@ -15,7 +15,7 @@ export default function MFAVerification() {
     e.preventDefault();
     if (otp === "123456" || otp.length === 6) {
       // Mock successful verification
-      navigate(`/${role}/dashboard`);
+      navigate(`/${role}`);
     } else {
       setError("Incorrect OTP verification code (Try '123456')");
     }
