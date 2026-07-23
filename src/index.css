@@ -93,35 +93,29 @@ html, body, #root {
   display: block !important;
 }
 
-/* Hide scrollbar globally for Firefox & IE/Edge */
+/* Custom Dark Scrollbar styling for all elements */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
 * {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
+  scrollbar-width: thin;
+  scrollbar-color: #1e293b #020617;
 }
-
-/* Hide scrollbars globally for Chrome/Safari/Webkit */
-*::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-
-html {
-  margin: 0;
-  padding: 0;
-  overflow-y: auto !important;
-  overflow-x: hidden;
-  background-color: hsl(var(--background));
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  color: hsl(var(--foreground));
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  background-color: transparent;
-}
-
 /* Custom Premium Animations */
 @keyframes grid-move {
   0% { transform: translateY(0); }

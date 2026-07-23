@@ -8,7 +8,7 @@ import { Shield, ArrowLeft } from "lucide-react";
 const schema = zod.object({
   email: zod.string().email("Invalid email address"),
   password: zod.string().min(6, "Password must be at least 6 characters"),
-  role: zod.enum(["borrower", "lender", "rep", "admin"]),
+  role: zod.enum(["borrower", "lender", "rep", "admin", "network"]),
 });
 
 export default function Login() {
@@ -29,6 +29,7 @@ export default function Login() {
     if (selectedRole === "lender") setValue("email", "lender@gmail.com");
     if (selectedRole === "rep") setValue("email", "rep@gmail.com");
     if (selectedRole === "admin") setValue("email", "admin@gmail.com");
+    if (selectedRole === "network") setValue("email", "network@gmail.com");
   }, [selectedRole, setValue]);
 
   const onSubmit = (data) => {
@@ -59,7 +60,8 @@ export default function Login() {
                 { id: "borrower", label: "Borrower / Applicant" },
                 { id: "lender", label: "Lender / Investor" },
                 { id: "rep", label: "OAL Representative" },
-                { id: "admin", label: "System Admin" }
+                { id: "admin", label: "System Admin" },
+                { id: "network", label: "Network Stream Panel" }
               ].map((roleOption) => (
                 <button
                   key={roleOption.id}
@@ -69,7 +71,7 @@ export default function Login() {
                     selectedRole === roleOption.id
                       ? "bg-blue-600 border-blue-500 text-slate-100 shadow-lg shadow-blue-500/20"
                       : "bg-slate-950 border-slate-850 text-slate-400 hover:text-slate-200 hover:border-slate-700"
-                  }`}
+                  } ${roleOption.id === "network" ? "col-span-2 bg-purple-900/30 border-purple-500/30 text-purple-300 hover:bg-purple-900/50" : ""}`}
                 >
                   {roleOption.label}
                 </button>
