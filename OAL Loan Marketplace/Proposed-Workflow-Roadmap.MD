@@ -9,7 +9,7 @@ OAL Network ek secure, enterprise-level lending platform hoga jahan:
 * Borrowers loan applications submit karenge
 * OAL Representatives borrowers aur lenders ke beech coordination karenge
 * Lenders qualified borrowers ko loan offers provide karenge
-* Admin complete platform manage karega
+* Admin complete platform manadge karega
 
 Main workflow:
 **Borrower → OAL Rep → Lender → Offer → Loan Processing**
@@ -291,4 +291,4 @@ Post Funding Dashboard
 
 
 Borrower → OAL Rep → (OAL Network Panel) ← Lender
-```
+```    

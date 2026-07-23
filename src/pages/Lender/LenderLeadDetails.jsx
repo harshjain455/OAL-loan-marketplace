@@ -11,15 +11,25 @@ export default function LenderLeadDetails() {
   const [isRepModalOpen, setIsRepModalOpen] = useState(false);
 
   // Form States
-  const [offerAmount, setOfferAmount] = useState("75000");
+  const [offerAmount, setOfferAmount] = useState("");
   const [offerRate, setOfferRate] = useState("");
   const [toastMessage, setToastMessage] = useState("");
+  const [offerSubmitted, setOfferSubmitted] = useState(false);
   const showToast = (msg) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(""), 5000);
   };
   const [offerDuration, setOfferDuration] = useState("24");
   const [repNote, setRepNote] = useState("");
+
+  // Open offer modal — always with a fresh form
+  const openOfferModal = () => {
+    setOfferAmount("");
+    setOfferRate("");
+    setOfferDuration("24");
+    setOfferSubmitted(false);
+    setIsOfferModalOpen(true);
+  };
 
   // Mock lead database lookup
   const leadDetails = {
@@ -52,8 +62,9 @@ export default function LenderLeadDetails() {
       showToast("Please fill in all offer terms");
       return;
     }
+    setOfferSubmitted(true);
     showToast(`Offer successfully submitted for Lead ${leadDetails.id}!\nAmount: $${Number(offerAmount).toLocaleString()}\nInterest Rate: ${offerRate}%\nDuration: ${offerDuration} Months`);
-    setIsOfferModalOpen(false);
+    setTimeout(() => setIsOfferModalOpen(false), 1500);
   };
 
   const handleSendRepMessage = (e) => {
@@ -81,7 +92,7 @@ export default function LenderLeadDetails() {
 
         <div className="flex items-center gap-3">
           <button
-            onClick={() => setIsOfferModalOpen(true)}
+            onClick={openOfferModal}
             className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs px-4 py-2 rounded-xl transition-colors shadow cursor-pointer"
           >
             <Briefcase size={15} />
@@ -218,7 +229,7 @@ export default function LenderLeadDetails() {
           </button>
 
           <button
-            onClick={() => setIsOfferModalOpen(true)}
+            onClick={openOfferModal}
             className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-lg cursor-pointer"
           >
             <Briefcase size={16} />
@@ -250,6 +261,16 @@ export default function LenderLeadDetails() {
             </div>
 
             <form onSubmit={handleSubmitOffer} className="space-y-4 py-5">
+              {offerSubmitted ? (
+                <div className="flex flex-col items-center gap-3 py-8 text-center">
+                  <div className="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
+                    <CheckCircle2 size={28} className="text-emerald-400" />
+                  </div>
+                  <p className="text-sm font-bold text-white">Offer Successfully Submitted!</p>
+                  <p className="text-xs text-slate-400">Your bid has been forwarded to the OAL Agent waiting room for Lead {leadDetails.id}.</p>
+                </div>
+              ) : (
+                <>
               <div>
                 <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-wider mb-1.5">Target Lead</label>
                 <input
@@ -322,6 +343,8 @@ export default function LenderLeadDetails() {
                   Forward Offer
                 </button>
               </div>
+                </>
+              )}
             </form>
           </div>
         </div>
