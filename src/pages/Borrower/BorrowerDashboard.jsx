@@ -175,6 +175,55 @@ export default function BorrowerDashboard() {
 
       </div>
 
+      {/* 2.5 Application Journey Progress Tracker */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl overflow-hidden">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+          <h2 className="text-sm font-bold text-white flex items-center gap-2">
+            <Zap size={16} className="text-indigo-400" />
+            Loan Journey — Application Flow Tracker
+          </h2>
+          <span className="text-[11px] text-indigo-400 font-bold bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full">Step 4 of 10</span>
+        </div>
+        <div className="relative flex items-start gap-0 overflow-x-auto pb-2">
+          {/* Progress line */}
+          <div className="absolute top-4 left-4 right-4 h-0.5 bg-slate-800 z-0">
+            <div className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style={{ width: '35%' }} />
+          </div>
+          {[
+            { label: "Create Account", icon: UserCheck, done: true },
+            { label: "KYC Verification", icon: ShieldCheck, done: true },
+            { label: "Loan Application", icon: FileText, done: true },
+            { label: "Upload Documents", icon: UploadCloud, done: true, active: true },
+            { label: "AI Score Generated", icon: Cpu, done: false },
+            { label: "Lenders Notified", icon: Bell, done: false },
+            { label: "Lenders Submit Offers", icon: DollarSign, done: false },
+            { label: "Compare & Accept Offer", icon: Award, done: false },
+            { label: "Loan Processing", icon: Lock, done: false },
+            { label: "Funded 🎉", icon: TrendingUp, done: false },
+          ].map((step, idx) => {
+            const StepIcon = step.icon;
+            return (
+              <div key={idx} className="flex flex-col items-center gap-1.5 min-w-[80px] relative z-10">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all ${
+                  step.done && step.active
+                    ? 'bg-indigo-500 border-indigo-400 shadow-lg shadow-indigo-500/40'
+                    : step.done
+                    ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400'
+                    : 'bg-slate-900 border-slate-700 text-slate-600'
+                }`}>
+                  <StepIcon size={14} className={step.done ? (step.active ? 'text-white' : 'text-emerald-400') : 'text-slate-600'} />
+                </div>
+                <span className={`text-[9px] font-bold text-center leading-tight max-w-[70px] ${
+                  step.done && step.active ? 'text-indigo-300'
+                  : step.done ? 'text-emerald-400'
+                  : 'text-slate-600'
+                }`}>{step.label}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* 3. GRAPH SECTION (VERTICAL DASHED LINE REMOVED) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
@@ -457,11 +506,25 @@ export default function BorrowerDashboard() {
                 <span className="text-[10px] font-bold text-white block">KYC Upload</span>
               </Link>
               <Link 
+                to="/borrower/ai-score"
+                className="p-2.5 bg-slate-950 hover:bg-slate-850 border border-slate-850 rounded-xl text-center space-y-1 transition-colors"
+              >
+                <Cpu size={16} className="text-purple-400 mx-auto" />
+                <span className="text-[10px] font-bold text-white block">AI Score</span>
+              </Link>
+              <Link 
                 to="/borrower/offers"
                 className="p-2.5 bg-slate-950 hover:bg-slate-850 border border-slate-850 rounded-xl text-center space-y-1 transition-colors"
               >
                 <Award size={16} className="text-emerald-400 mx-auto" />
                 <span className="text-[10px] font-bold text-white block">Offers ({lenderBids.length})</span>
+              </Link>
+              <Link 
+                to="/borrower/messages"
+                className="p-2.5 bg-slate-950 hover:bg-slate-850 border border-slate-850 rounded-xl text-center space-y-1 transition-colors"
+              >
+                <MessageSquare size={16} className="text-sky-400 mx-auto" />
+                <span className="text-[10px] font-bold text-white block">Messages</span>
               </Link>
             </div>
           </div>

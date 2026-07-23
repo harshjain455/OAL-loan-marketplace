@@ -89,15 +89,38 @@ export default function BorrowerOffers() {
         </Link>
       </div>
 
-      {/* Success Notification Banner if accepted */}
+      {/* Success Notification Banner if accepted — Loan Processing Timeline */}
       {acceptedOffer && (
-        <div className="p-5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl space-y-2 text-emerald-400 animate-fadeIn shadow-lg">
-          <div className="flex items-center gap-2 font-bold text-sm">
-            <CheckCircle2 size={18} /> Offer Accepted: {acceptedOffer.lenderCode} ({acceptedOffer.amount} at {acceptedOffer.rate})
+        <div className="p-5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl space-y-4 shadow-lg">
+          <div className="flex items-center gap-2 font-bold text-sm text-emerald-400">
+            <CheckCircle2 size={18} /> Offer Accepted & Locked — {acceptedOffer.lenderCode} ({acceptedOffer.amount} at {acceptedOffer.rate})
           </div>
           <p className="text-xs text-emerald-300">
-            Your choice has been locked and submitted to your assigned OAL Representative. They will contact you shortly to complete closing documentation and funding.
+            Your OAL Representative has been notified. The loan processing pipeline is now active.
           </p>
+
+          {/* Post-Acceptance Pipeline */}
+          <div className="pt-2 border-t border-emerald-500/20">
+            <p className="text-[11px] font-bold text-emerald-400 mb-3">📋 Loan Processing Pipeline</p>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { step: "Offer Locked", done: true },
+                { step: "OAL Rep Review", done: true },
+                { step: "Closing Documentation", done: false },
+                { step: "Loan Processing", done: false },
+                { step: "Funding 🎉", done: false },
+              ].map((s, idx) => (
+                <div key={idx} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-bold border ${ 
+                  s.done 
+                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' 
+                    : 'bg-slate-900 text-slate-500 border-slate-800'
+                }`}>
+                  {s.done ? <CheckCircle2 size={12} /> : <span className="w-3 h-3 rounded-full border border-slate-600 inline-block" />}
+                  {s.step}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 

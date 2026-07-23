@@ -5,6 +5,9 @@ import {
   Share2, Settings, User, LogOut, ChevronLeft, ChevronRight, PanelLeft, PanelLeftClose, ChevronDown 
 } from "lucide-react";
 
+// Simulated unread notification count
+const UNREAD_NOTIFICATIONS = 2;
+
 export default function BorrowerLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -48,7 +51,7 @@ export default function BorrowerLayout() {
         <div className="flex items-center justify-between h-16 px-4 border-b border-slate-800 bg-slate-900">
           {!isCollapsed ? (
             <span className="text-sm font-bold tracking-wider text-slate-50 uppercase truncate">
-              Borrow Portal Dashbord
+              Borrower Portal
             </span>
           ) : (
             <span className="text-xs font-bold tracking-wider text-blue-400 uppercase mx-auto">
@@ -134,8 +137,24 @@ export default function BorrowerLayout() {
             </button>
           </div>
 
+          {/* Notification Bell + Profile Dropdown */}
+          <div className="flex items-center gap-3 ml-auto">
+            {/* Notification Bell */}
+            <Link
+              to="/borrower/notifications"
+              className="relative p-2 rounded-xl bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors"
+              title="Notifications"
+            >
+              <Bell size={18} />
+              {UNREAD_NOTIFICATIONS > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] font-black text-white flex items-center justify-center animate-pulse shadow-lg shadow-rose-500/40">
+                  {UNREAD_NOTIFICATIONS}
+                </span>
+              )}
+            </Link>
+
           {/* Dynamic Top Right Borrower Profile Dropdown */}
-          <div className="relative ml-auto">
+          <div className="relative">
             <button
               onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
               className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-slate-800/80 border border-transparent hover:border-slate-700/60 transition-all cursor-pointer group"
@@ -171,7 +190,15 @@ export default function BorrowerLayout() {
                     </span>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-800">
+                  <div className="pt-2 border-t border-slate-800 space-y-1.5">
+                    <Link
+                      to="/borrower/settings"
+                      onClick={() => setProfileDropdownOpen(false)}
+                      className="w-full flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition-all"
+                    >
+                      <Settings size={14} />
+                      Profile & Settings
+                    </Link>
                     <button
                       onClick={() => {
                         setProfileDropdownOpen(false);
@@ -189,6 +216,7 @@ export default function BorrowerLayout() {
                 </div>
               </>
             )}
+          </div>
           </div>
         </header>
 
